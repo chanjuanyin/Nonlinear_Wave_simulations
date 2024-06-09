@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.18..3.20)
+
+project(mymodule)
+
+# find_package(Python REQUIRED COMPONENTS Interpreter Development NumPy)
+# find_package(pybind11 REQUIRED CONFIG)
+# find_package(xtensor-python REQUIRED)
+find_package(xtensor REQUIRED)
+
+add_executable(Simulation_1_analytic_solution Simulation_1/analytic_solution.cpp)
+add_executable(Simulation_1_monte_carlo_simulation Simulation_1/monte_carlo_simulation.cpp)
+add_executable(Simulation_2_analytic_solution Simulation_2/analytic_solution.cpp)
+add_executable(Simulation_2_monte_carlo_simulation Simulation_2/monte_carlo_simulation.cpp)
+add_executable(Simulation_3_analytic_solution Simulation_3/analytic_solution.cpp)
+add_executable(Simulation_3_monte_carlo_simulation Simulation_3/monte_carlo_simulation.cpp)
+add_executable(Simulation_4_analytic_solution Simulation_4/analytic_solution.cpp)
+add_executable(Simulation_4_monte_carlo_simulation Simulation_4/monte_carlo_simulation.cpp)
+
+target_link_libraries(Simulation_1_analytic_solution PUBLIC xtensor)
+target_link_libraries(Simulation_1_monte_carlo_simulation PUBLIC xtensor)
+target_link_libraries(Simulation_2_analytic_solution PUBLIC xtensor)
+target_link_libraries(Simulation_2_monte_carlo_simulation PUBLIC xtensor)
+target_link_libraries(Simulation_3_analytic_solution PUBLIC xtensor)
+target_link_libraries(Simulation_3_monte_carlo_simulation PUBLIC xtensor)
+target_link_libraries(Simulation_4_analytic_solution PUBLIC xtensor)
+target_link_libraries(Simulation_4_monte_carlo_simulation PUBLIC xtensor)
