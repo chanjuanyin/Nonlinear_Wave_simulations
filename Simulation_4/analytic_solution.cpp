@@ -32,8 +32,8 @@ xt::xarray<double> fix_x_varies_t(double x, double y, double lower_bound, double
 int main()
 {
     string directoryPath = "../Simulation_4/output";
-    if (!std::__fs::filesystem::exists(directoryPath)) {
-        std::__fs::filesystem::create_directory(directoryPath);
+    if (!std::filesystem::exists(directoryPath)) {
+        std::filesystem::create_directories(directoryPath);
     }
     double x = 4;
     double y = 4;
