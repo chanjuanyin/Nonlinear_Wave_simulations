@@ -34,9 +34,13 @@ int main()
 {
     double test_float_1 = sin((double) M_PI);
     double test_float_2 = sinh((double) M_PI);
+    double test_float_3 = sin((double) 1);
+    double test_float_4 = sin((double) 90);
 
     cout << test_float_1 << endl;
     cout << test_float_2 << endl;
+    cout << test_float_3 << endl;
+    cout << test_float_4 << endl;
 
     return 0;
 }
