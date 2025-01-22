@@ -59,7 +59,7 @@ complex<double> simulate_recursion(double t, double x, double lambda) {
         double c = 2.;
         double d = 1. / pow(pow(c,2)-1,1./2.);
         double eta = uniform_distribution(generator);
-        complex<double> complex_x(0, -x);  // x becomes i * x
+        complex<double> complex_x(0, x);  // x becomes i * x
         if (eta < 1./3.) {
             return 3./2. * exp(lambda * t) * tanh( pow(2,-1./2.) * d * (complex_x + t) );
         } else if (eta >= 1./3. && eta < 2./3.) {
@@ -67,22 +67,9 @@ complex<double> simulate_recursion(double t, double x, double lambda) {
         } else {
             std::uniform_real_distribution<> time_distribution(-t, t);
             double y = time_distribution(generator);
-            complex<double> complex_y(0, -y);  // x becomes i * y
+            complex<double> complex_y(0, y);  // x becomes i * y
             return - 3. * pow(2,-1./2.) * exp(lambda * t) * t * d * c * pow( sech( pow(2,-1./2.) * d * (complex_x + complex_y) ) , 2 );
         }
-        // double c = 2.;
-        // double d = 1. / pow(pow(c,2)-1,1./2.);
-        // double eta = uniform_distribution(generator);
-        // complex<double> neg_i(0, 1);  // neg_i = -i 
-        // if (eta < 1./3.) {
-        //     return 3./2. * exp(lambda * t) * tanh( neg_i * pow(2,-1./2.) * d * (x + t) );
-        // } else if (eta >= 1./3. && eta < 2./3.) {
-        //     return 3./2. * exp(lambda * t) * tanh( neg_i * pow(2,-1./2.) * d * (x - t) );
-        // } else {
-        //     std::uniform_real_distribution<> time_distribution(-t, t);
-        //     double y = time_distribution(generator);
-        //     return - 3. * pow(2,-1./2.) * exp(lambda * t) * t * d * c * pow( sech( neg_i * pow(2,-1./2.) * d * (x + y) ) , 2 );
-        // }
     }
 }
 
@@ -134,8 +121,7 @@ int main()
     double lambda = 0.25;
     int num_estimations = 31;
     xt::xarray<double> arr = xt::zeros<double>({2, num_estimations});
-    string file_name = "../Simulation_7/output/monte_carlo.csv";
-    // string file_name = "../Simulation_7/output/monte_carlo_2.csv";
+    string file_name = "../Simulation_7/output/monte_carlo_2.csv";
 
     for (int k = 0; k < num_estimations; k++) {
         double t = static_cast<double>(k);
