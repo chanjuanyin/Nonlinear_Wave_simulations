@@ -63,13 +63,13 @@ complex<double> simulate_recursion(double t, complex<double> x, double lambda) {
         double eta = uniform_distribution(generator);
         complex<double> neg_i(0, -1);  // neg_i = -i 
         if (eta < 1./3.) {
-            return 3./2. * exp(lambda * t) * tanh( pow(2,-1./2.) * d * (neg_i * x + t) );
+            return 3./2. * exp(lambda * t) * tanh( - pow(2,-1./2.) * d * (neg_i * x + t) );
         } else if (eta >= 1./3. && eta < 2./3.) {
-            return 3./2. * exp(lambda * t) * tanh( pow(2,-1./2.) * d * (neg_i * x - t) );
+            return 3./2. * exp(lambda * t) * tanh( - pow(2,-1./2.) * d * (neg_i * x - t) );
         } else {
             std::uniform_real_distribution<> time_distribution(-t, t);
             double y = time_distribution(generator);
-            return - 3. * pow(2,-1./2.) * exp(lambda * t) * t * d * c * pow( sech( pow(2,-1./2.) * d * (neg_i * x + y) ) , 2 );
+            return - 3. * pow(2,-1./2.) * exp(lambda * t) * t * d * c * pow( sech( - pow(2,-1./2.) * d * (neg_i * x + y) ) , 2 );
         }
     }
 }

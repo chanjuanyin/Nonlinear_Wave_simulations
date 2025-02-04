@@ -28,7 +28,7 @@ std::pair<xt::xarray<double>, xt::xarray<double>> fix_x_varies_t(double x, doubl
     xt::xarray<double> arr = xt::arange(lower_bound, upper_bound + delta_t_, delta_t_);
     double c = 2.;
     double d = 1. / pow(pow(c, 2) - 1, 1. / 2.);
-    complex<double> complex_x(0, -x);  // x becomes -i * x
+    complex<double> complex_x(0, x);  // x becomes i * x
     
     // Calculate the complex result
     xt::xarray<complex<double>> arr2 = tanh(pow(2, -1. / 2.) * d * (complex_x - c * arr)); // u(t,x) = tanh(\frac{1}{\sqrt{2}}d(-ix-ct))
