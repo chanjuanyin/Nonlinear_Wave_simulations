@@ -45,16 +45,16 @@ complex<double> simulate_recursion(double t, complex<double> x, double lambda) {
         if (J < 1./2.) {
             std::uniform_real_distribution<> time_distribution(-tau, tau);
             double y = time_distribution(generator);
-            complex<double> neg_i(0, -1);  // neg_i = -i 
-            complex<double> v = simulate_recursion(t - tau, neg_i * x + y, lambda);
+            complex<double> imag_i(0, 1);  // imag_i = i 
+            complex<double> v = simulate_recursion(t - tau, x + imag_i * y, lambda);
             return - 2. * tau / lambda * exp(lambda * tau) * v;
         } else {
             std::uniform_real_distribution<> time_distribution(-tau, tau);
             double y = time_distribution(generator);
-            complex<double> neg_i(0, -1);  // neg_i = -i 
-            complex<double> v1 = simulate_recursion(t - tau, neg_i * x + y, lambda);
-            complex<double> v2 = simulate_recursion(t - tau, neg_i * x + y, lambda);
-            complex<double> v3 = simulate_recursion(t - tau, neg_i * x + y, lambda);
+            complex<double> imag_i(0, 1);  // imag_i = i 
+            complex<double> v1 = simulate_recursion(t - tau, x + imag_i * y, lambda);
+            complex<double> v2 = simulate_recursion(t - tau, x + imag_i * y, lambda);
+            complex<double> v3 = simulate_recursion(t - tau, x + imag_i * y, lambda);
             return 2. * tau / lambda * exp(lambda * tau) * v1 * v2 * v3;
         }
     } else {
