@@ -123,7 +123,6 @@ int main()
     int num_estimations = 31;
     xt::xarray<double> arr = xt::zeros<double>({2, num_estimations});
     string file_name = "../Simulation_8/output/monte_carlo.csv";
-    // string file_name = "../Simulation_7/output/monte_carlo_2.csv";
 
     for (int k = 0; k < num_estimations; k++) {
         double t = static_cast<double>(k);
