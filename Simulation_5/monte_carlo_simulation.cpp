@@ -26,7 +26,7 @@ const double eps=1e-6;
 // Number of simulations
 const int NUM_SIMULATIONS = 10000000;
 // Number of threads
-const int NUM_THREADS = 160;
+const int NUM_THREADS = 120;
 
 // Simulation function that each thread will run
 complex<double> simulate_recursion(double t, complex<double> x, complex<double> y, double lambda) {
@@ -125,7 +125,7 @@ int main()
     double Y = 1.;
     double t = 0.5;
     double lambda = 1.;
-    int num_estimations = 5; // Should be 101 but we try not to be so aggressive at start
+    int num_estimations = 100; // Should be 100 but we try not to be so aggressive at start
     xt::xarray<double> arr_real = xt::zeros<double>({num_estimations + 1, num_estimations + 1});
     xt::xarray<double> arr_imag = xt::zeros<double>({num_estimations + 1, num_estimations + 1});
     string file_name_real = "../Simulation_5/output/monte_carlo_real.csv";
