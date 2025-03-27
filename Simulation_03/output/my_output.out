@@ -1,0 +1,46 @@
+x = 9, t = 0, estimated_value = 0.0519481, Execution time: 21.6574 seconds.
+Updated CSV with x = 9, t = 0, estimated_value = 0.0519481
+x = 9, t = 0.1, estimated_value = 0.0502701, Execution time: 27.4245 seconds.
+Updated CSV with x = 9, t = 0.1, estimated_value = 0.0502701
+x = 9, t = 0.2, estimated_value = 0.0486776, Execution time: 34.1645 seconds.
+Updated CSV with x = 9, t = 0.2, estimated_value = 0.0486776
+x = 9, t = 0.3, estimated_value = 0.047161, Execution time: 41.9996 seconds.
+Updated CSV with x = 9, t = 0.3, estimated_value = 0.047161
+x = 9, t = 0.4, estimated_value = 0.0457067, Execution time: 51.0716 seconds.
+Updated CSV with x = 9, t = 0.4, estimated_value = 0.0457067
+x = 9, t = 0.5, estimated_value = 0.0443659, Execution time: 61.5734 seconds.
+Updated CSV with x = 9, t = 0.5, estimated_value = 0.0443659
+x = 9, t = 0.6, estimated_value = 0.0430317, Execution time: 73.865 seconds.
+Updated CSV with x = 9, t = 0.6, estimated_value = 0.0430317
+x = 9, t = 0.7, estimated_value = 0.0417547, Execution time: 88.1415 seconds.
+Updated CSV with x = 9, t = 0.7, estimated_value = 0.0417547
+x = 9, t = 0.8, estimated_value = 0.0405322, Execution time: 104.747 seconds.
+Updated CSV with x = 9, t = 0.8, estimated_value = 0.0405322
+x = 9, t = 0.9, estimated_value = 0.0394032, Execution time: 123.99 seconds.
+Updated CSV with x = 9, t = 0.9, estimated_value = 0.0394032
+x = 9, t = 1, estimated_value = 0.038281, Execution time: 146.485 seconds.
+Updated CSV with x = 9, t = 1, estimated_value = 0.038281
+x = 9, t = 1.1, estimated_value = 0.0372281, Execution time: 172.36 seconds.
+Updated CSV with x = 9, t = 1.1, estimated_value = 0.0372281
+x = 9, t = 1.2, estimated_value = 0.0362188, Execution time: 202.52 seconds.
+Updated CSV with x = 9, t = 1.2, estimated_value = 0.0362188
+x = 9, t = 1.3, estimated_value = 0.0352589, Execution time: 237.694 seconds.
+Updated CSV with x = 9, t = 1.3, estimated_value = 0.0352589
+x = 9, t = 1.4, estimated_value = 0.0343206, Execution time: 278.361 seconds.
+Updated CSV with x = 9, t = 1.4, estimated_value = 0.0343206
+x = 9, t = 1.5, estimated_value = 0.033403, Execution time: 325.858 seconds.
+Updated CSV with x = 9, t = 1.5, estimated_value = 0.033403
+x = 9, t = 1.6, estimated_value = 0.0325988, Execution time: 380.554 seconds.
+Updated CSV with x = 9, t = 1.6, estimated_value = 0.0325988
+x = 9, t = 1.7, estimated_value = 0.0317638, Execution time: 444.518 seconds.
+Updated CSV with x = 9, t = 1.7, estimated_value = 0.0317638
+x = 9, t = 1.8, estimated_value = 0.0309323, Execution time: 518.808 seconds.
+Updated CSV with x = 9, t = 1.8, estimated_value = 0.0309323
+x = 9, t = 1.9, estimated_value = 0.0302031, Execution time: 604.959 seconds.
+Updated CSV with x = 9, t = 1.9, estimated_value = 0.0302031
+x = 9, t = 2, estimated_value = 0.0294359, Execution time: 704.995 seconds.
+Updated CSV with x = 9, t = 2, estimated_value = 0.0294359
+x = 9, t = 2.1, estimated_value = 0.0286721, Execution time: 821.907 seconds.
+Updated CSV with x = 9, t = 2.1, estimated_value = 0.0286721
+x = 9, t = 2.2, estimated_value = 0.0280499, Execution time: 955.833 seconds.
+Updated CSV with x = 9, t = 2.2, estimated_value = 0.0280499

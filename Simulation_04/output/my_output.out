@@ -1,0 +1,10 @@
+x_1 = 4, x_2 = 4, t = 0, estimated_value = 0.375, Execution time: 22.1671 seconds.
+Updated CSV with x_1 = 4, x_2 = 4, t = 0, estimated_value = 0.375
+x_1 = 4, x_2 = 4, t = 0.1, estimated_value = 0.375446, Execution time: 26.7821 seconds.
+Updated CSV with x_1 = 4, x_2 = 4, t = 0.1, estimated_value = 0.375446
+x_1 = 4, x_2 = 4, t = 0.2, estimated_value = 0.386061, Execution time: 31.8644 seconds.
+Updated CSV with x_1 = 4, x_2 = 4, t = 0.2, estimated_value = 0.386061
+x_1 = 4, x_2 = 4, t = 0.3, estimated_value = 0.40862, Execution time: 37.5015 seconds.
+Updated CSV with x_1 = 4, x_2 = 4, t = 0.3, estimated_value = 0.40862
+x_1 = 4, x_2 = 4, t = 0.4, estimated_value = 0.447128, Execution time: 43.7262 seconds.
+Updated CSV with x_1 = 4, x_2 = 4, t = 0.4, estimated_value = 0.447128
