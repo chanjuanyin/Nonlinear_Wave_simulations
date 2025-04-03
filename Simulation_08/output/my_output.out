@@ -72,3 +72,5 @@ x_1 = 4, x_2 = 4, x_3 = 4, t = 3.5, estimated_value = 0.0166487, Execution time:
 Updated CSV with x_1 = 4, x_2 = 4, x_3 = 4, t = 3.5, estimated_value = 0.0166487
 x_1 = 4, x_2 = 4, x_3 = 4, t = 3.6, estimated_value = 0.0162974, Execution time: 1584.21 seconds.
 Updated CSV with x_1 = 4, x_2 = 4, x_3 = 4, t = 3.6, estimated_value = 0.0162974
+x_1 = 4, x_2 = 4, x_3 = 4, t = 3.7, estimated_value = 0.0160326, Execution time: 1753.29 seconds.
+Updated CSV with x_1 = 4, x_2 = 4, x_3 = 4, t = 3.7, estimated_value = 0.0160326
