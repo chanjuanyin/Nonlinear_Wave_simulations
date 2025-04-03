@@ -38,10 +38,10 @@ double simulate_recursion(double t, double x, double lambda) {
     double tau = exponential_distribution(generator);
     if (tau < t) {
         double Y = tau * uniform_distribution(generator);
-        double v1 = simulate_recursion(t - tau, x + Y, lambda);
-        double v2 = simulate_recursion(t - tau, x + Y, lambda);
-        double v3 = simulate_recursion(t - tau, x + Y, lambda);
-        return (tau / lambda) * exp(lambda * tau) * v1 * v2 * v3;
+        double chi_1 = simulate_recursion(t - tau, x + Y, lambda);
+        double chi_2 = simulate_recursion(t - tau, x + Y, lambda);
+        double chi_3 = simulate_recursion(t - tau, x + Y, lambda);
+        return (tau / lambda) * exp(lambda * tau) * chi_1 * chi_2 * chi_3;
     } else {
         double Y = t * uniform_distribution(generator);
         return exp(lambda * t) * ((1./2.) * sqrt(2) / (x+t) + (1./2.) * sqrt(2) / (x-t) + t * (-2) * pow(x+Y, -2));

@@ -24,12 +24,12 @@ typedef pair<int,int> PP;
 typedef double ld;
 const double eps=1e-6;
 
-std::pair<xt::xarray<double>, xt::xarray<double>> fix_x_varies_t(double x, double lower_bound, double upper_bound, double delta_t_) {
+std::pair<xt::xarray<double>, xt::xarray<double>> fix_x_varies_t(double x_1, double x_2, double lower_bound, double upper_bound, double delta_t_) {
     xt::xarray<double> arr = xt::arange(lower_bound, upper_bound + delta_t_, delta_t_);
     complex<double> imag_i(0, 1);    // imag_i = i 
     
     // Calculate the complex result
-    xt::xarray<complex<double>> arr2 = tanh( (1/sqrt(6)) * (imag_i * x - 2. * arr)); // u(t,x) = tanh(\frac{1}{\sqrt{6}}(ix-2t))
+    xt::xarray<complex<double>> arr2 = tanh( (1/sqrt(6)) * ( (imag_i/sqrt(2)) * (x_1 + x_2) - 2. * arr)); // u(t,(x_1,x_2)) = tanh(\frac{1}{\sqrt{6}}(\frac{i}{\sqrt{2}}(x_1+x_2)-2t))
 
     // Convert the complex result to real by taking the real and imaginary part
     xt::xarray<double> real_arr(arr2.shape());
@@ -45,26 +45,27 @@ std::pair<xt::xarray<double>, xt::xarray<double>> fix_x_varies_t(double x, doubl
 
 int main()
 {
-    string directoryPath = "../Simulation_04/results";
+    string directoryPath = "../Simulation_06/results";
     if (!std::filesystem::exists(directoryPath)) {
         std::filesystem::create_directories(directoryPath);
     }
     
-    double x = -1.;
+    double x_1 = -1.;
+    double x_2 = -1.;
     std::pair<xt::xarray<double>, xt::xarray<double>> arr;
-    arr = fix_x_varies_t(x, 0., 3., 0.01);
+    arr = fix_x_varies_t(x_1, x_2, 0., 3., 0.01);
 
     // Reshape each array in the pair separately
     arr.first = arr.first.reshape({1, static_cast<int>((3 - 0) / 0.01) + 1});
     arr.second = arr.second.reshape({1, static_cast<int>((3 - 0) / 0.01) + 1});
     
-    string file_name = "../Simulation_04/results/analytic.csv";
+    string file_name = "../Simulation_06/results/analytic.csv";
     std::ofstream out_file(file_name);
     
     // Write the real and imaginary arrays to the CSV file separately
     xt::dump_csv(out_file, arr.first);  // Real part
     xt::dump_csv(out_file, arr.second); // Imaginary part
     
-    cout << "x = " << x << ", successfully exported to csv!" << endl;
+    cout << "x_1 = "<< x_1 << ", x_2 = "<< x_2 << ", successfully exported to csv!" << endl;
     return 0;
 }
