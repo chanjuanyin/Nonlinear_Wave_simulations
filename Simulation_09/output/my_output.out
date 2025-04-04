@@ -38,3 +38,25 @@ x_1 = -1, x_2 = -1, x_3 = -1, t = 1.8, estimated_value u(t,(x_1, x_2)) = 633784 
 Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
 x_1 = -1, x_2 = -1, x_3 = -1, t = 1.9, estimated_value u(t,(x_1, x_2)) = -329171 + 804896 * i, Execution time: 51.3757 seconds.
 Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2, estimated_value u(t,(x_1, x_2)) = 1.68357e+07 + 969657 * i, Execution time: 53.2388 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2.1, estimated_value u(t,(x_1, x_2)) = -9.66539e+08 + 4.47328e+08 * i, Execution time: 55.1741 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2.2, estimated_value u(t,(x_1, x_2)) = 1.11797e+11 + 5.22105e+09 * i, Execution time: 57.0895 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2.3, estimated_value u(t,(x_1, x_2)) = -2.47859e+15 + -7.026e+14 * i, Execution time: 59.0916 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2.4, estimated_value u(t,(x_1, x_2)) = 3.65692e+16 + -1.52834e+16 * i, Execution time: 61.1514 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2.5, estimated_value u(t,(x_1, x_2)) = 1.35553e+15 + 3.77518e+15 * i, Execution time: 63.2744 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2.6, estimated_value u(t,(x_1, x_2)) = -3.72736e+14 + -1.12668e+14 * i, Execution time: 65.4906 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2.7, estimated_value u(t,(x_1, x_2)) = -7.65683e+15 + 1.01203e+17 * i, Execution time: 67.6216 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2.8, estimated_value u(t,(x_1, x_2)) = 1.01794e+19 + 3.53637e+18 * i, Execution time: 69.9338 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 2.9, estimated_value u(t,(x_1, x_2)) = 3.38756e+21 + 1.70777e+21 * i, Execution time: 72.2639 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.
+x_1 = -1, x_2 = -1, x_3 = -1, t = 3, estimated_value u(t,(x_1, x_2)) = 1.02185e+22 + 6.43181e+21 * i, Execution time: 74.6604 seconds.
+Updated CSV file name: '../Simulation_09/results/monte_carlo.csv'.

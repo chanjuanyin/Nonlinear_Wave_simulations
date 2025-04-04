@@ -74,3 +74,9 @@ x_1 = 4, x_2 = 4, x_3 = 4, t = 3.6, estimated_value = 0.0162974, Execution time:
 Updated CSV with x_1 = 4, x_2 = 4, x_3 = 4, t = 3.6, estimated_value = 0.0162974
 x_1 = 4, x_2 = 4, x_3 = 4, t = 3.7, estimated_value = 0.0160326, Execution time: 1753.29 seconds.
 Updated CSV with x_1 = 4, x_2 = 4, x_3 = 4, t = 3.7, estimated_value = 0.0160326
+x_1 = 4, x_2 = 4, x_3 = 4, t = 3.8, estimated_value = 0.0156733, Execution time: 1939.63 seconds.
+Updated CSV with x_1 = 4, x_2 = 4, x_3 = 4, t = 3.8, estimated_value = 0.0156733
+x_1 = 4, x_2 = 4, x_3 = 4, t = 3.9, estimated_value = 0.0153593, Execution time: 2145.48 seconds.
+Updated CSV with x_1 = 4, x_2 = 4, x_3 = 4, t = 3.9, estimated_value = 0.0153593
+x_1 = 4, x_2 = 4, x_3 = 4, t = 4, estimated_value = 0.0150336, Execution time: 2375.58 seconds.
+Updated CSV with x_1 = 4, x_2 = 4, x_3 = 4, t = 4, estimated_value = 0.0150336
