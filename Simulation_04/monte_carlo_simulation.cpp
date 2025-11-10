@@ -131,9 +131,9 @@ int main()
         std::pair<double, double> estimated_value = simulate(z, t, c, lambda, NUM_SIMULATIONS);
         auto end_time = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed_time = end_time - start_time;
-        cout << "z = " << z << ", t = " << t << ", estimated_value u(z,t) = " << estimated_value.first 
-                << " + " << estimated_value.second << " * i, Execution time: " << elapsed_time.count() 
-                << " seconds."<< endl;
+        cout << "z = " << z.real() << " + " << z.imag() << " * i, t = " << t << ", estimated_value u(z,t) = " 
+            << estimated_value.first << " + " << estimated_value.second << " * i, Execution time: " 
+            << elapsed_time.count() << " seconds."<< endl;
 
         // Update the value in the array and write to CSV
         xt::view(arr, 0, k) = estimated_value.first;
