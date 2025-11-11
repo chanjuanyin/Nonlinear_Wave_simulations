@@ -147,7 +147,7 @@ int main()
     complex<double> z_2 = complex<double>(-1., 0.);
     complex<double> z_3 = complex<double>(-1., 0.);
     complex<double> c = complex<double>(0., 1.); // c = i
-    double lambda = 0.3355817; // Choose lambda = t_0, please refer to the Plot_history.ipynb Jupyter Notebook for details of how to calculate maximum t_0 (existence time of classical solution)
+    double lambda = 0.3038419; // Choose lambda = t_0, please refer to the Plot_history.ipynb Jupyter Notebook for details of how to calculate maximum t_0 (existence time of classical solution)
     int num_estimations = 31;
     xt::xarray<double> arr = xt::zeros<double>({2, num_estimations});
     string file_name = "../Simulation_09/results/monte_carlo.csv";
