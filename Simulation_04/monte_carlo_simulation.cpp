@@ -26,7 +26,7 @@ const double eps=1e-6;
 // Number of simulations
 const int NUM_SIMULATIONS = 10000000;
 // Number of threads
-const int NUM_THREADS = 120;
+const int NUM_THREADS = 102;
 
 complex<double> sech(complex<double> x) {
     return 2.0 / (exp(x) + exp(-x));
@@ -55,6 +55,7 @@ complex<double> simulate_recursion(complex<double> z, double t, complex<double> 
         double J_draw = uniform_distribution(generator);
         int J;
         complex<double> aJ;
+        double q_J = 1/2.;
         if (J_draw < 1./2.) {
             J = 1;
             aJ = complex<double>(-1., 0.);
@@ -66,7 +67,7 @@ complex<double> simulate_recursion(complex<double> z, double t, complex<double> 
         for (int l = 0; l < J; l++) {
             H = H * simulate_recursion(z+c*tau*(2.*p-1),t-tau, c, lambda);
         }
-        return exp(lambda*tau) * (tau / lambda) * (aJ/(1/2.)) * H;
+        return exp(lambda*tau) * (tau / lambda) * (aJ/q_J) * H;
     } 
 }
 
