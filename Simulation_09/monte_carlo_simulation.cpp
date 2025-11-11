@@ -26,14 +26,34 @@ const double eps=1e-6;
 // Number of simulations
 const int NUM_SIMULATIONS = 10000000;
 // Number of threads
-const int NUM_THREADS = 120;
+const int NUM_THREADS = 102;
 
 complex<double> sech(complex<double> x) {
     return 2.0 / (exp(x) + exp(-x));
 }
 
+complex<double> phi(complex<double> z_1, complex<double> z_2, complex<double> z_3) {
+    return tanh( (complex<double>(0., 1.)/(3*sqrt(2))) * (z_1+z_2+z_3) );
+}
+
+complex<double> partial_z_1_phi(complex<double> z_1, complex<double> z_2, complex<double> z_3) {
+    return (complex<double>(0., 1.)/(3*sqrt(2))) * pow(sech( (complex<double>(0., 1.)/(3*sqrt(2))) * (z_1+z_2+z_3) ), 2);
+} // Note: in our case \partial_z_1 phi = \partial_z_2 phi = \partial_z_3 phi
+
+complex<double> partial_z_2_phi(complex<double> z_1, complex<double> z_2, complex<double> z_3) {
+    return (complex<double>(0., 1.)/(3*sqrt(2))) * pow(sech( (complex<double>(0., 1.)/(3*sqrt(2))) * (z_1+z_2+z_3) ), 2);
+} // Note: in our case \partial_z_1 phi = \partial_z_2 phi = \partial_z_3 phi
+
+complex<double> partial_z_3_phi(complex<double> z_1, complex<double> z_2, complex<double> z_3) {
+    return (complex<double>(0., 1.)/(3*sqrt(2))) * pow(sech( (complex<double>(0., 1.)/(3*sqrt(2))) * (z_1+z_2+z_3) ), 2);
+} // Note: in our case \partial_z_1 phi = \partial_z_2 phi = \partial_z_3 phi
+
+complex<double> psi(complex<double> z_1, complex<double> z_2, complex<double> z_3) {
+    return -sqrt(2./3.) * pow(sech( (complex<double>(0., 1.)/(3*sqrt(2))) * (z_1+z_2+z_3) ), 2);
+}
+
 // Simulation function that each thread will run
-complex<double> simulate_recursion(double t, complex<double> x_1, complex<double> x_2, complex<double> x_3, double lambda) {
+complex<double> simulate_recursion(complex<double> z_1, complex<double> z_2, complex<double> z_3, double t, complex<double> c, double lambda) {
     std::random_device random_seed;  // Obtain a random seed from the hardware
     std::mt19937 generator(random_seed()); // Standard Mersenne Twister engine
     std::exponential_distribution<double> exponential_distribution(lambda);
@@ -41,40 +61,50 @@ complex<double> simulate_recursion(double t, complex<double> x_1, complex<double
     std::uniform_real_distribution<> angle_distribution(0., 2*M_PI);
 
     double tau = exponential_distribution(generator);
-    if (tau < t) {
-        complex<double> imag_i(0, 1);    // imag_i = i
-        double theta  = angle_distribution(generator);
-        double p = uniform_distribution(generator);
+    double p = uniform_distribution(generator);
+    double theta = angle_distribution(generator);
+    if (tau > t) {
         double alpha = acos(1-2*p);
-        double J = uniform_distribution(generator);
-        if (J<0.5) {
-            complex<double> chi_1 = simulate_recursion(t - tau, x_1 + imag_i * tau * sin(alpha) * cos(theta), x_2 + imag_i * tau * sin(alpha) * sin(theta), x_3 + imag_i * tau * cos(alpha), lambda);
-            return (tau / lambda) * exp(lambda * tau) * (-2.) * chi_1;
-        }
-        else{
-            complex<double> chi_1 = simulate_recursion(t - tau, x_1 + imag_i * tau * sin(alpha) * cos(theta), x_2 + imag_i * tau * sin(alpha) * sin(theta), x_3 + imag_i * tau * cos(alpha), lambda);
-            complex<double> chi_2 = simulate_recursion(t - tau, x_1 + imag_i * tau * sin(alpha) * cos(theta), x_2 + imag_i * tau * sin(alpha) * sin(theta), x_3 + imag_i * tau * cos(alpha), lambda);
-            complex<double> chi_3 = simulate_recursion(t - tau, x_1 + imag_i * tau * sin(alpha) * cos(theta), x_2 + imag_i * tau * sin(alpha) * sin(theta), x_3 + imag_i * tau * cos(alpha), lambda);
-            return (tau / lambda) * exp(lambda * tau) * (2.) * chi_1 * chi_2 * chi_3;
-        }
+        complex<double> y_1 = c * t * sin(alpha) * cos(theta);
+        complex<double> y_2 = c * t * sin(alpha) * sin(theta);
+        complex<double> y_3 = c * t * cos(alpha);
+        complex<double> I_1 = phi(z_1 + y_1, z_2 + y_2, z_3 + y_3);
+        complex<double> I_2 = y_1 * partial_z_1_phi(z_1 + y_1, z_2 + y_2, z_3 + y_3) + y_2 * partial_z_2_phi(z_1 + y_1, z_2 + y_2, z_3 + y_3) + y_3 * partial_z_3_phi(z_1 + y_1, z_2 + y_2, z_3 + y_3);
+        complex<double> I_3 = t * psi(z_1 + y_1, z_2 + y_2, z_3 + y_3);
+        return exp(lambda*t) * ( I_1 + I_2 + I_3 );
     } else {
-        complex<double> imag_i(0, 1);    // imag_i = i
-        double theta  = angle_distribution(generator);
-        double p = uniform_distribution(generator);
         double alpha = acos(1-2*p);
-        return exp(lambda * t) * ( tanh( (imag_i/sqrt(18.)) * (x_1 + imag_i * t * sin(alpha) * cos(theta) + x_2 + imag_i * t * sin(alpha) * sin(theta) + x_3 + imag_i * t * cos(alpha)) ) + imag_i * t * (sin(alpha) * cos(theta) + sin(alpha) * sin(theta) + cos(alpha)) * (imag_i / sqrt(18.)) * pow(sech((imag_i/sqrt(18.)) * (x_1 + imag_i * t * sin(alpha) * cos(theta) + x_2 + imag_i * t * sin(alpha) * sin(theta) + x_3 + imag_i * t * cos(alpha))), 2) + t * (-sqrt(2./3.)) * pow(sech((imag_i/sqrt(18.)) * (x_1 + imag_i * t * sin(alpha) * cos(theta) + x_2 + imag_i * t * sin(alpha) * sin(theta) + x_3 + imag_i * t * cos(alpha))), 2));
-    }
+        complex<double> y_1 = c * tau * sin(alpha) * cos(theta);
+        complex<double> y_2 = c * tau * sin(alpha) * sin(theta);
+        complex<double> y_3 = c * tau * cos(alpha);
+        double J_draw = uniform_distribution(generator);
+        int J;
+        complex<double> aJ;
+        double q_J = 1/2.;
+        if (J_draw < 1./2.) {
+            J = 1;
+            aJ = complex<double>(-1., 0.);
+        } else {
+            J = 3;
+            aJ = complex<double>(1., 0.);
+        }
+        complex<double> H = complex<double>(1., 0.);
+        for (int l = 0; l < J; l++) {
+            H = H * simulate_recursion(z_1+y_1, z_2+y_2, z_3+y_3, t-tau, c, lambda);
+        }
+        return exp(lambda*tau) * (tau / lambda) * (aJ/q_J) * H;
+    } 
 }
 
-void run_simulation(int start, int end, double t, double x_1, double x_2, double x_3, double lambda, xt::xarray<double>& results_real, xt::xarray<double>& results_imaginary) {
+void run_simulation(int start, int end, complex<double> z_1, complex<double> z_2, complex<double> z_3, double t, complex<double> c, double lambda, xt::xarray<double>& results_real, xt::xarray<double>& results_imaginary) {
     for (int i = start; i < end; ++i) {
-        complex<double> result = simulate_recursion(t, x_1, x_2, x_3, lambda);
+        complex<double> result = simulate_recursion(z_1, z_2, z_3, t, c, lambda);
         results_real[i] = real(result);
         results_imaginary[i] = imag(result);
     }
 }
 
-std::pair<double, double> simulate(double t, double x_1, double x_2, double x_3, double lambda, int total_sims) {
+std::pair<double, double> simulate(complex<double> z_1, complex<double> z_2, complex<double> z_3, double t, complex<double> c, double lambda, int total_sims) {
     xt::xarray<double> results_real = xt::zeros<double>({total_sims});
     xt::xarray<double> results_imaginary = xt::zeros<double>({total_sims});
 
@@ -88,7 +118,7 @@ std::pair<double, double> simulate(double t, double x_1, double x_2, double x_3,
     for (int i = 0; i < NUM_THREADS; ++i) {
         int start = i * simulations_per_thread;
         int end = (i == NUM_THREADS - 1) ? total_sims : start + simulations_per_thread;
-        threads.emplace_back(run_simulation, start, end, t, x_1, x_2, x_3, lambda, std::ref(results_real), std::ref(results_imaginary));
+        threads.emplace_back(run_simulation, start, end, z_1, z_2, z_3, t, c, lambda, std::ref(results_real), std::ref(results_imaginary));
     }
 
     // Join threads
@@ -106,10 +136,6 @@ std::pair<double, double> simulate(double t, double x_1, double x_2, double x_3,
 
 int main()
 {
-    string directoryPath = "../Simulation_09/output";
-    if (!std::filesystem::exists(directoryPath)) {
-        std::filesystem::create_directories(directoryPath);
-    }
 
     // Create output directory if not exists for the Monte Carlo results
     string resultsDirectory = "../Simulation_09/results";
@@ -117,54 +143,35 @@ int main()
         std::filesystem::create_directories(resultsDirectory);
     }
 
-    // Open log file for stdout (normal output)
-    freopen("../Simulation_09/output/my_output.out", "w", stdout);
-    // Open log file for stderr (error messages)
-    freopen("../Simulation_09/output/my_error.err", "w", stderr);
+    complex<double> z_1 = complex<double>(-1., 0.);
+    complex<double> z_2 = complex<double>(-1., 0.);
+    complex<double> z_3 = complex<double>(-1., 0.);
+    complex<double> c = complex<double>(0., 1.); // c = i
+    double lambda = 0.3355817; // Choose lambda = t_0, please refer to the Plot_history.ipynb Jupyter Notebook for details of how to calculate maximum t_0 (existence time of classical solution)
+    int num_estimations = 31;
+    xt::xarray<double> arr = xt::zeros<double>({2, num_estimations});
+    string file_name = "../Simulation_09/results/monte_carlo.csv";
 
-    try{
-        double x_1 = -1.;
-        double x_2 = -1.;
-        double x_3 = -1.;
-        double lambda = 0.25;
-        int num_estimations = 31;
-        xt::xarray<double> arr = xt::zeros<double>({2, num_estimations});
-        string file_name = "../Simulation_09/results/monte_carlo.csv";
+    for (int k = 0; k < num_estimations; k++) {
+        double t = static_cast<double>(k);
+        t /= 10.;
+        auto start_time = std::chrono::high_resolution_clock::now();
+        std::pair<double, double> estimated_value = simulate(z_1, z_2, z_3, t, c, lambda, NUM_SIMULATIONS);
+        auto end_time = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed_time = end_time - start_time;
+        cout << "z_1 = " << z_1.real() << " + " << z_1.imag() << " * i, z_2 = " << z_2.real() 
+            << " + " << z_2.imag() << " * i, z_3 = " << z_3.real() << " + " << z_3.imag() 
+            << " * i, t = " << t << ", estimated_value u(z,t) = " << estimated_value.first 
+            << " + " << estimated_value.second << " * i, Execution time: " << elapsed_time.count() 
+            << " seconds."<< endl;
 
-        for (int k = 0; k < num_estimations; k++) {
-            double t = static_cast<double>(k);
-            t /= 10.;
-            auto start_time = std::chrono::high_resolution_clock::now();
-            std::pair<double, double> estimated_value = simulate(t, x_1, x_2, x_3, lambda, NUM_SIMULATIONS);
-            auto end_time = std::chrono::high_resolution_clock::now();
-            std::chrono::duration<double> elapsed_time = end_time - start_time;
-            cout << "x_1 = " << x_1 << ", x_2 = " << x_2 << ", x_3 = " << x_3 << ", t = " << t 
-                << ", estimated_value u(t,(x_1, x_2)) = " << estimated_value.first << " + " 
-                << estimated_value.second << " * i, Execution time: " << elapsed_time.count() 
-                << " seconds."<< endl;
-            cout.flush();  // Ensure that output is written immediately to the file
-    
-            // Update the value in the array and write to CSV
-            xt::view(arr, 0, k) = estimated_value.first;
-            xt::view(arr, 1, k) = estimated_value.second;
-            std::ofstream out_file(file_name);
-            xt::dump_csv(out_file, arr);
-            cout << "Updated CSV file name: '" << file_name << "'." << endl;
-            cout.flush();  // Ensure that output is written immediately to the file
-        }
+        // Update the value in the array and write to CSV
+        xt::view(arr, 0, k) = estimated_value.first;
+        xt::view(arr, 1, k) = estimated_value.second;
+        std::ofstream out_file(file_name);
+        xt::dump_csv(out_file, arr);
+        cout << "Updated CSV file name: '" << file_name << "'." << endl;
     }
-    catch (const std::exception& e) {
-        cerr << "An exception occurred: " << e.what() << endl;  // Print exception message to stderr
-        cerr.flush();  // Ensure that the error message is written to the error log
-    }
-    catch (...) {
-        cerr << "An unknown error occurred." << endl;  // Catch any other errors and print to stderr
-        cerr.flush();
-    }
-
-    // Close the log files
-    fclose(stdout);
-    fclose(stderr);
 
     return 0;
 }
