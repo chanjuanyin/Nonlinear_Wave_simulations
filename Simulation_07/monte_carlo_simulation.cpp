@@ -26,10 +26,26 @@ const double eps=1e-6;
 // Number of simulations
 const int NUM_SIMULATIONS = 10000000;
 // Number of threads
-const int NUM_THREADS = 120;
+const int NUM_THREADS = 102;
+
+complex<double> phi(complex<double> z_1, complex<double> z_2) {
+    return sin(M_PI*z_1)*sin(M_PI*z_2);
+}
+
+complex<double> partial_z_1_phi(complex<double> z_1, complex<double> z_2) {
+    return M_PI * cos(M_PI*z_1) * sin(M_PI*z_2);
+}
+
+complex<double> partial_z_2_phi(complex<double> z_1, complex<double> z_2) {
+    return M_PI * sin(M_PI*z_1) * cos(M_PI*z_2);
+} // Note: in our case \partial_z_1 phi = \partial_z_2 phi
+
+complex<double> psi(complex<double> z_1, complex<double> z_2) {
+    return -sin(M_PI*z_1)*sin(M_PI*z_2);
+}
 
 // Simulation function that each thread will run
-complex<double> simulate_recursion(double t, complex<double> x_1, complex<double> x_2, double lambda) {
+complex<double> simulate_recursion(complex<double> z_1, complex<double> z_2, double t, complex<double> c, double lambda) {
     std::random_device random_seed;  // Obtain a random seed from the hardware
     std::mt19937 generator(random_seed()); // Standard Mersenne Twister engine
     std::exponential_distribution<double> exponential_distribution(lambda);
@@ -37,40 +53,48 @@ complex<double> simulate_recursion(double t, complex<double> x_1, complex<double
     std::uniform_real_distribution<> angle_distribution(0., 2*M_PI);
 
     double tau = exponential_distribution(generator);
-    if (tau < t) {
-        complex<double> imag_i(0, 1);    // imag_i = i
-        double theta  = angle_distribution(generator);
-        double p = uniform_distribution(generator);
-        double R = tau * (pow(1 - pow(1 - p, 2.0), 0.5));
-        double J = uniform_distribution(generator);
-        if (J<0.5) {
-            complex<double> chi_1 = simulate_recursion(t - tau, x_1 + imag_i * R * cos(theta), x_2 + imag_i * R * sin(theta), lambda);
-            return (tau / lambda) * exp(lambda * tau) * (-2.) * chi_1;
-        }
-        else{
-            complex<double> chi_1 = simulate_recursion(t - tau, x_1 + imag_i * R * cos(theta), x_2 + imag_i * R * sin(theta), lambda);
-            complex<double> chi_2 = simulate_recursion(t - tau, x_1 + imag_i * R * cos(theta), x_2 + imag_i * R * sin(theta), lambda);
-            complex<double> chi_3 = simulate_recursion(t - tau, x_1 + imag_i * R * cos(theta), x_2 + imag_i * R * sin(theta), lambda);
-            return (tau / lambda) * exp(lambda * tau) * (-2.) * chi_1 * chi_2 * chi_3;
-        }
+    double p = uniform_distribution(generator);
+    double theta = angle_distribution(generator);
+    if (tau > t) {
+        double R = t * sqrt(1-pow((1-p), 2));
+        complex<double> y_1 = c * R * cos(theta);
+        complex<double> y_2 = c * R * sin(theta);
+        complex<double> I_1 = phi(z_1 + y_1, z_2 + y_2);
+        complex<double> I_2 = y_1 * partial_z_1_phi(z_1 + y_1, z_2 + y_2) + y_2 * partial_z_2_phi(z_1 + y_1, z_2 + y_2);
+        complex<double> I_3 = t * psi(z_1 + y_1, z_2 + y_2);
+        return exp(lambda*t) * ( I_1 + I_2 + I_3 );
     } else {
-        complex<double> imag_i(0, 1);    // imag_i = i
-        double theta  = angle_distribution(generator);
-        double p = uniform_distribution(generator);
-        double R = t * (pow(1 - pow(1 - p, 2.0), 0.5));
-        return exp(lambda * t) * ( sin(M_PI*(x_1 + imag_i * R * cos(theta)))*sin(M_PI*(x_2 + imag_i * R * sin(theta))) + imag_i * R * cos(theta) * M_PI * cos(M_PI*(x_1+imag_i*R*cos(theta)))*sin(M_PI*(x_2+imag_i*R*sin(theta))) + imag_i * R * sin(theta) * M_PI * sin(M_PI*(x_1+imag_i*R*cos(theta)))*cos(M_PI*(x_2+imag_i*R*sin(theta))) - t * sin(M_PI*(x_1+imag_i*R*cos(theta))) * sin(M_PI*(x_2+imag_i*R*sin(theta))));
-    }
+        double R = tau * sqrt(1-pow((1-p), 2));
+        complex<double> y_1 = c * R * cos(theta);
+        complex<double> y_2 = c * R * sin(theta);
+        double J_draw = uniform_distribution(generator);
+        int J;
+        complex<double> aJ;
+        double q_J = 1/2.;
+        if (J_draw < 1./2.) {
+            J = 1;
+            aJ = complex<double>(-1., 0.);
+        } else {
+            J = 3;
+            aJ = complex<double>(1., 0.);
+        }
+        complex<double> H = complex<double>(1., 0.);
+        for (int l = 0; l < J; l++) {
+            H = H * simulate_recursion(z_1+y_1, z_2+y_2, t-tau, c, lambda);
+        }
+        return exp(lambda*tau) * (tau / lambda) * (aJ/q_J) * H;
+    } 
 }
 
-void run_simulation(int start, int end, double t, double x_1, double x_2, double lambda, xt::xarray<double>& results_real, xt::xarray<double>& results_imaginary) {
+void run_simulation(int start, int end, complex<double> z_1, complex<double> z_2, double t, complex<double> c, double lambda, xt::xarray<double>& results_real, xt::xarray<double>& results_imaginary) {
     for (int i = start; i < end; ++i) {
-        complex<double> result = simulate_recursion(t, x_1, x_2, lambda);
+        complex<double> result = simulate_recursion(z_1, z_2, t, c, lambda);
         results_real[i] = real(result);
         results_imaginary[i] = imag(result);
     }
 }
 
-std::pair<double, double> simulate(double t, double x_1, double x_2, double lambda, int total_sims) {
+std::pair<double, double> simulate(complex<double> z_1, complex<double> z_2, double t, complex<double> c, double lambda, int total_sims) {
     xt::xarray<double> results_real = xt::zeros<double>({total_sims});
     xt::xarray<double> results_imaginary = xt::zeros<double>({total_sims});
 
@@ -84,7 +108,7 @@ std::pair<double, double> simulate(double t, double x_1, double x_2, double lamb
     for (int i = 0; i < NUM_THREADS; ++i) {
         int start = i * simulations_per_thread;
         int end = (i == NUM_THREADS - 1) ? total_sims : start + simulations_per_thread;
-        threads.emplace_back(run_simulation, start, end, t, x_1, x_2, lambda, std::ref(results_real), std::ref(results_imaginary));
+        threads.emplace_back(run_simulation, start, end, z_1, z_2, t, c, lambda, std::ref(results_real), std::ref(results_imaginary));
     }
 
     // Join threads
@@ -102,72 +126,53 @@ std::pair<double, double> simulate(double t, double x_1, double x_2, double lamb
 
 int main()
 {
-    string directoryPath = "../Simulation_07/output";
-    if (!std::filesystem::exists(directoryPath)) {
-        std::filesystem::create_directories(directoryPath);
-    }
-
     // Create output directory if not exists for the Monte Carlo results
     string resultsDirectory = "../Simulation_07/results";
     if (!std::filesystem::exists(resultsDirectory)) {
         std::filesystem::create_directories(resultsDirectory);
     }
 
-    // Open log file for stdout (normal output)
-    freopen("../Simulation_07/output/my_output.out", "w", stdout);
-    // Open log file for stderr (error messages)
-    freopen("../Simulation_07/output/my_error.err", "w", stderr);
+    complex<double> z_1_start = complex<double>(0., 0.);
+    complex<double> z_1_end = complex<double>(1., 0.);
+    complex<double> z_2_start = complex<double>(0., 0.);
+    complex<double> z_2_end = complex<double>(1., 0.);
+    double t = 0.5;
+    complex<double> c = complex<double>(0., 1.); // c = i
+    double lambda = 0.25;
+    int num_estimations = 100; // Should be 100 but we try not to be so aggressive at start
+    double num_estimations_double = static_cast<double>(num_estimations);
+    xt::xarray<double> arr_real = xt::zeros<double>({num_estimations + 1, num_estimations + 1});
+    xt::xarray<double> arr_imag = xt::zeros<double>({num_estimations + 1, num_estimations + 1});
+    string file_name_real = "../Simulation_07/results/monte_carlo_real.csv";
+    string file_name_imag = "../Simulation_07/results/monte_carlo_imag.csv";
 
-    try{
-        double X_1 = 1.;
-        double X_2 = 1.;
-        double t = 0.5;
-        double lambda = 0.25;
-        int num_estimations = 100; // Should be 100 but we try not to be so aggressive at start
-        xt::xarray<double> arr_real = xt::zeros<double>({num_estimations + 1, num_estimations + 1});
-        xt::xarray<double> arr_imag = xt::zeros<double>({num_estimations + 1, num_estimations + 1});
-        string file_name_real = "../Simulation_07/results/monte_carlo_real.csv";
-        string file_name_imag = "../Simulation_07/results/monte_carlo_imag.csv";
+    for (int k = 0; k <= num_estimations; k++) {
+        for (int l = 0; l <= num_estimations; l++) {
+            double k_double = static_cast<double>(k);
+            complex<double> z_1 = z_1_start + (z_1_end - z_1_start) / num_estimations_double * k_double;
+            double l_double = static_cast<double>(l);
+            complex<double> z_2 = z_2_start + (z_2_end - z_2_start) / num_estimations_double * l_double;
 
-        for (int k = 0; k <= num_estimations; k++) {
-            for (int l = 0; l <= num_estimations; l++) {
-                double x_1 = static_cast<double>(k);
-                x_1 = X_1 / num_estimations * x_1;
-                double x_2 = static_cast<double>(l);
-                x_2 = X_2 / num_estimations * x_2;
+            auto start_time = std::chrono::high_resolution_clock::now();
+            std::pair<double, double> estimated_value = simulate(z_1, z_2, t, c, lambda, NUM_SIMULATIONS);
+            auto end_time = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_time = end_time - start_time;
+            std::cout << "z_1 = " << z_1.real() << " + " << z_1.imag() << " * i, z_2 = " << z_2.real() 
+                << " + " << z_2.imag() << " * i, t = " << t << ", estimated_value u((z_1,z_2), t) = " 
+                << estimated_value.first << " + " << estimated_value.second 
+                << " * i, Execution time: " << elapsed_time.count() << " seconds."<< std::endl;
 
-                auto start_time = std::chrono::high_resolution_clock::now();
-                std::pair<double, double> estimated_value = simulate(t, x_1, x_2, lambda, NUM_SIMULATIONS);
-                auto end_time = std::chrono::high_resolution_clock::now();
-                std::chrono::duration<double> elapsed_time = end_time - start_time;
-                std::cout << "x_1 = " << x_1 << ", x_2 = " << x_2 << ", t = " << t << ", estimated_value u(t,(x_1,x_2)) = " 
-                    << estimated_value.first << " + " << estimated_value.second 
-                    << " * i, Execution time: " << elapsed_time.count() << " seconds."<< std::endl;
-
-                // Update the value in the array and write to CSV
-                xt::view(arr_real, k, l) = estimated_value.first;
-                xt::view(arr_imag, k, l) = estimated_value.second;
-                std::ofstream out_file_real(file_name_real);
-                std::ofstream out_file_imag(file_name_imag);
-                xt::dump_csv(out_file_real, arr_real);
-                xt::dump_csv(out_file_imag, arr_imag);
-                std::cout << "Updated CSV file name: '" << file_name_real << "'." << std::endl;
-                std::cout << "Updated CSV file name: '" << file_name_imag << "'." << std::endl;
-            }
+            // Update the value in the array and write to CSV
+            xt::view(arr_real, k, l) = estimated_value.first;
+            xt::view(arr_imag, k, l) = estimated_value.second;
+            std::ofstream out_file_real(file_name_real);
+            std::ofstream out_file_imag(file_name_imag);
+            xt::dump_csv(out_file_real, arr_real);
+            xt::dump_csv(out_file_imag, arr_imag);
+            std::cout << "Updated CSV file name: '" << file_name_real << "'." << std::endl;
+            std::cout << "Updated CSV file name: '" << file_name_imag << "'." << std::endl;
         }
     }
-    catch (const std::exception& e) {
-        cerr << "An exception occurred: " << e.what() << endl;  // Print exception message to stderr
-        cerr.flush();  // Ensure that the error message is written to the error log
-    }
-    catch (...) {
-        cerr << "An unknown error occurred." << endl;  // Catch any other errors and print to stderr
-        cerr.flush();
-    }
-
-    // Close the log files
-    fclose(stdout);
-    fclose(stderr);
 
     return 0;
 }
