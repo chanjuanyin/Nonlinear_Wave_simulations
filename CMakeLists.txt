@@ -28,6 +28,8 @@ add_executable(Simulation_08_monte_carlo_simulation Simulation_08/monte_carlo_si
 add_executable(Simulation_09_analytic_solution Simulation_09/analytic_solution.cpp)
 add_executable(Simulation_09_monte_carlo_simulation Simulation_09/monte_carlo_simulation.cpp)
 add_executable(Simulation_10_monte_carlo_simulation Simulation_10/monte_carlo_simulation.cpp)
+add_executable(Simulation_11_monte_carlo_simulation Simulation_11/monte_carlo_simulation.cpp)
+add_executable(Simulation_12_monte_carlo_simulation Simulation_12/monte_carlo_simulation.cpp)
 
 # Link xtensor library
 target_link_libraries(Simulation_01_analytic_solution PUBLIC xtensor pthread)
@@ -48,6 +50,8 @@ target_link_libraries(Simulation_08_monte_carlo_simulation PUBLIC xtensor pthrea
 target_link_libraries(Simulation_09_analytic_solution PUBLIC xtensor pthread)
 target_link_libraries(Simulation_09_monte_carlo_simulation PUBLIC xtensor pthread)
 target_link_libraries(Simulation_10_monte_carlo_simulation PUBLIC xtensor pthread)
+target_link_libraries(Simulation_11_monte_carlo_simulation PUBLIC xtensor pthread)
+target_link_libraries(Simulation_12_monte_carlo_simulation PUBLIC xtensor pthread)
 
 # Link the filesystem library if necessary (GCC < 9 might need this)
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
@@ -70,5 +74,7 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
         target_link_libraries(Simulation_09_analytic_solution PUBLIC stdc++fs)
         target_link_libraries(Simulation_09_monte_carlo_simulation PUBLIC stdc++fs)
         target_link_libraries(Simulation_10_monte_carlo_simulation PUBLIC stdc++fs)
+        target_link_libraries(Simulation_11_monte_carlo_simulation PUBLIC stdc++fs)
+        target_link_libraries(Simulation_12_monte_carlo_simulation PUBLIC stdc++fs)
     endif()
 endif()
