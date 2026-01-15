@@ -73,20 +73,20 @@ complex<double> simulate_recursion(complex<double> z_1, complex<double> z_2, dou
         complex<double> y_2 = c * R * sin(theta);
         double J_draw = uniform_distribution(generator);
         int J;
-        complex<double> aJ;
+        complex<double> a_J;
         double q_J = 1/2.;
         if (J_draw < 1./2.) {
             J = 1;
-            aJ = complex<double>(-1., 0.);
+            a_J = complex<double>(-1., 0.);
         } else {
             J = 3;
-            aJ = complex<double>(1., 0.);
+            a_J = complex<double>(1., 0.);
         }
         complex<double> H = complex<double>(1., 0.);
         for (int l = 0; l < J; l++) {
             H = H * simulate_recursion(z_1+y_1, z_2+y_2, t-tau, c, lambda);
         }
-        return exp(lambda*tau) * (tau / lambda) * (aJ/q_J) * H;
+        return exp(lambda*tau) * (tau / lambda) * (a_J/q_J) * H;
     } 
 }
 
