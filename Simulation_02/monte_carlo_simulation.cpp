@@ -26,36 +26,54 @@ const double eps=1e-6;
 // Number of simulations
 const int NUM_SIMULATIONS = 10000000;
 // Number of threads
-const int NUM_THREADS = 120;
+const int NUM_THREADS = 102;
+
+complex<double> sech(complex<double> x) {
+    return 2.0 / (exp(x) + exp(-x));
+}
+
+complex<double> phi(complex<double> z) {
+    return sqrt(2.0) / z;
+}
+
+complex<double> psi(complex<double> z) {
+    return -2.0 / (z * z);
+}
 
 // Simulation function that each thread will run
-double simulate_recursion(double t, double x, double lambda) {
+complex<double> simulate_recursion(complex<double> z, double t, complex<double> c, double lambda) {
     std::random_device random_seed;  // Obtain a random seed from the hardware
     std::mt19937 generator(random_seed()); // Standard Mersenne Twister engine
     std::exponential_distribution<double> exponential_distribution(lambda);
-    std::uniform_real_distribution<> uniform_distribution(-1., 1.);
+    std::uniform_real_distribution<> uniform_distribution(0., 1.);
 
     double tau = exponential_distribution(generator);
-    if (tau < t) {
-        double Y = tau * uniform_distribution(generator);
-        double chi_1 = simulate_recursion(t - tau, x + Y, lambda);
-        double chi_2 = simulate_recursion(t - tau, x + Y, lambda);
-        double chi_3 = simulate_recursion(t - tau, x + Y, lambda);
-        return (tau / lambda) * exp(lambda * tau) * chi_1 * chi_2 * chi_3;
+    double p = uniform_distribution(generator);
+    if (tau > t) {
+        return exp(lambda*t) * ( phi(z+c*t)/2. + phi(z-c*t)/2. + t*psi(z+c*t*(2.*p-1)) );
     } else {
-        double Y = t * uniform_distribution(generator);
-        return exp(lambda * t) * ((1./2.) * sqrt(2) / (x+t) + (1./2.) * sqrt(2) / (x-t) + t * (-2) * pow(x+Y, -2));
-    }
+        int J = 3;
+        double a_J = 1.0;
+        double q_J = 1.0;
+        complex<double> H = complex<double>(1., 0.);
+        for (int l = 0; l < J; l++) {
+            H = H * simulate_recursion(z+c*tau*(2.*p-1),t-tau, c, lambda);
+        }
+        return exp(lambda*tau) * (tau / lambda) * (a_J/q_J) * H;
+    } 
 }
 
-void run_simulation(int start, int end, double t, double x, double lambda, xt::xarray<double>& results) {
+void run_simulation(int start, int end, complex<double> z, double t, complex<double> c, double lambda, xt::xarray<double>& results_real, xt::xarray<double>& results_imaginary) {
     for (int i = start; i < end; ++i) {
-        results[i] = simulate_recursion(t, x, lambda);
+        complex<double> result = simulate_recursion(z, t, c, lambda);
+        results_real[i] = real(result);
+        results_imaginary[i] = imag(result);
     }
 }
 
-double simulate(double t, double x, double lambda, int total_sims) {
-    xt::xarray<double> results = xt::zeros<double>({total_sims});
+std::pair<double, double> simulate(complex<double> z, double t, complex<double> c, double lambda, int total_sims) {
+    xt::xarray<double> results_real = xt::zeros<double>({total_sims});
+    xt::xarray<double> results_imaginary = xt::zeros<double>({total_sims});
 
     // Create a vector to hold the threads
     vector<thread> threads;
@@ -67,7 +85,7 @@ double simulate(double t, double x, double lambda, int total_sims) {
     for (int i = 0; i < NUM_THREADS; ++i) {
         int start = i * simulations_per_thread;
         int end = (i == NUM_THREADS - 1) ? total_sims : start + simulations_per_thread;
-        threads.emplace_back(run_simulation, start, end, t, x, lambda, std::ref(results));
+        threads.emplace_back(run_simulation, start, end, z, t, c, lambda, std::ref(results_real), std::ref(results_imaginary));
     }
 
     // Join threads
@@ -76,16 +94,15 @@ double simulate(double t, double x, double lambda, int total_sims) {
     }
 
     // Calculate the average result
-    double avg = xt::mean(results)[0];
-    return avg;
+    double avg_real = xt::mean(results_real)[0];
+    double avg_imaginary = xt::mean(results_imaginary)[0];
+
+    // Return both averages as a pair
+    return std::make_pair(avg_real, avg_imaginary);
 }
 
 int main()
 {
-    string directoryPath = "../Simulation_02/output";
-    if (!std::filesystem::exists(directoryPath)) {
-        std::filesystem::create_directories(directoryPath);
-    }
 
     // Create output directory if not exists for the Monte Carlo results
     string resultsDirectory = "../Simulation_02/results";
@@ -93,49 +110,31 @@ int main()
         std::filesystem::create_directories(resultsDirectory);
     }
 
-    // Open log file for stdout (normal output)
-    freopen("../Simulation_02/output/my_output.out", "w", stdout);
-    // Open log file for stderr (error messages)
-    freopen("../Simulation_02/output/my_error.err", "w", stderr);
+    complex<double> z = complex<double>(6., 0.); // z = 6 + 0i
+    complex<double> c = complex<double>(1., 0.); // c = 1
+    double lambda = 0.25;
+    int num_estimations = 51;
+    xt::xarray<double> arr = xt::zeros<double>({2, num_estimations});
+    string file_name = "../Simulation_02/results/monte_carlo.csv";
 
-    try {
-        double x = 6;
-        double lambda = .25;
-        int num_estimations = 51;
-        xt::xarray<double> arr = xt::zeros<double>({1, num_estimations});
-        string file_name = "../Simulation_02/results/monte_carlo.csv"; // Monte Carlo results file
+    for (int k = 0; k < num_estimations; k++) {
+        double t = static_cast<double>(k);
+        t /= 10.;
+        auto start_time = std::chrono::high_resolution_clock::now();
+        std::pair<double, double> estimated_value = simulate(z, t, c, lambda, NUM_SIMULATIONS);
+        auto end_time = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed_time = end_time - start_time;
+        cout << "z = " << z.real() << " + " << z.imag() << " * i, t = " << t << ", estimated_value u(z,t) = " 
+            << estimated_value.first << " + " << estimated_value.second << " * i, Execution time: " 
+            << elapsed_time.count() << " seconds."<< endl;
 
-        for (int k = 0; k < num_estimations; k++) {
-            double t = static_cast<double>(k);
-            t /= 10.;
-            auto start_time = std::chrono::high_resolution_clock::now();
-            double estimated_value = simulate(t, x, lambda, NUM_SIMULATIONS);
-            auto end_time = std::chrono::high_resolution_clock::now();
-            std::chrono::duration<double> elapsed_time = end_time - start_time;
-            cout << "x = " << x << ", t = " << t << ", estimated_value = " << estimated_value << ", Execution time: " 
-                 << elapsed_time.count() << " seconds." << endl;
-            cout.flush();  // Ensure that output is written immediately to the file
-
-            // Update the value in the array and write to CSV
-            xt::view(arr, 0, k) = estimated_value;
-            std::ofstream out_file(file_name);
-            xt::dump_csv(out_file, arr); // Write the results into the CSV file
-            cout << "Updated CSV with x = " << x << ", t = " << t << ", estimated_value = " << estimated_value << endl;
-            cout.flush();  // Ensure that output is written immediately to the file
-        }
+        // Update the value in the array and write to CSV
+        xt::view(arr, 0, k) = estimated_value.first;
+        xt::view(arr, 1, k) = estimated_value.second;
+        std::ofstream out_file(file_name);
+        xt::dump_csv(out_file, arr);
+        cout << "Updated CSV file name: '" << file_name << "'." << endl;
     }
-    catch (const std::exception& e) {
-        cerr << "An exception occurred: " << e.what() << endl;  // Print exception message to stderr
-        cerr.flush();  // Ensure that the error message is written to the error log
-    }
-    catch (...) {
-        cerr << "An unknown error occurred." << endl;  // Catch any other errors and print to stderr
-        cerr.flush();
-    }
-
-    // Close the log files
-    fclose(stdout);
-    fclose(stderr);
 
     return 0;
 }

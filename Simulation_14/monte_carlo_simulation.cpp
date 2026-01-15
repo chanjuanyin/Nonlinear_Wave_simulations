@@ -112,7 +112,7 @@ std::pair<double, double> simulate(complex<double> z, double t, complex<double> 
 int main()
 {
     // Create output directory if not exists for the Monte Carlo results
-    string resultsDirectory = "../Simulation_13/results";
+    string resultsDirectory = "../Simulation_14/results";
     if (!std::filesystem::exists(resultsDirectory)) {
         std::filesystem::create_directories(resultsDirectory);
     }
@@ -121,17 +121,17 @@ int main()
     complex<double> z_end = complex<double>(1., 0.);
     complex<double> c = complex<double>(0., 1.); // c = i
     double lambda = 0.25;
-    int num_time_estimations = 30; // t from 0.0 to 3.0 (inclusive)
+    int num_time_estimations = 60; // t from 0.0 to 3.0 (inclusive)
     int num_space_estimations = 100; // Should be 100 but we try not to be so aggressive at start
     double num_space_estimations_double = static_cast<double>(num_space_estimations);
     xt::xarray<double> arr_real = xt::zeros<double>({num_time_estimations + 1, num_space_estimations + 1});
     xt::xarray<double> arr_imag = xt::zeros<double>({num_time_estimations + 1, num_space_estimations + 1});
-    string file_name_real = "../Simulation_13/results/monte_carlo_real.csv";
-    string file_name_imag = "../Simulation_13/results/monte_carlo_imag.csv";
+    string file_name_real = "../Simulation_14/results/monte_carlo_real.csv";
+    string file_name_imag = "../Simulation_14/results/monte_carlo_imag.csv";
 
     for (int k = 0; k <= num_time_estimations; k++) {
         double t = static_cast<double>(k);
-        t /= 10.;
+        t /= 20.;
         for (int l = 0; l <= num_space_estimations; l++) {
             double l_double = static_cast<double>(l);
             complex<double> z = z_start + (z_end - z_start) / num_space_estimations_double * l_double;
