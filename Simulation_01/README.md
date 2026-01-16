@@ -12,4 +12,4 @@ The analytical solution is:
 
 $u(z,t) = 6(z+\sqrt{2}t)^{-2}$
 
-We set $c=1$, $z=3+0i$, $\lambda = 0.25$, and vary $t$ in $[0,2.0]$.
+We set $c=1$, $z=3+0i$, $\lambda = 0.25$, and sample $t \in [0,2.0]$.

@@ -12,4 +12,4 @@ The analytical solution is:
 
 $u(z,t) = \tanh\Big(\frac{1}{\sqrt{6}}(iz-2t)\Big)$
 
-We set $c=i$, $z=-1+0i$, $\lambda = 0.4185722$, and vary $t$ in $[0,3.0]$.
+We set $c=i$, $z=-1+0i$, $\lambda = 0.4185722$, and sample $t \in [0,3.0]$.

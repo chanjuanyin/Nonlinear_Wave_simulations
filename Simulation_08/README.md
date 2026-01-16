@@ -12,4 +12,4 @@ The analytical solution is:
 
 $u(z_1,z_2,z_3,t) = 6(z_1+z_2+z_3+2t)^{-2}$
 
-We set $c=1$, $z_1=4+0i$, $z_2=4+0i$, $z_3=4+0i$, $\lambda = 1.0$, and vary $t$ in $[0,4.0]$.
+We set $c=1$, $z_1=4+0i$, $z_2=4+0i$, $z_3=4+0i$, $\lambda = 1.0$, and sample $t \in [0,4.0]$.
