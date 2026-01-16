@@ -80,3 +80,23 @@ z = 9 + 0 * i, t = 3.9, estimated_value u(z,t) = 0.0197336 + 0 * i, Execution ti
 Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
 z = 9 + 0 * i, t = 4, estimated_value u(z,t) = 0.0184966 + 0 * i, Execution time: 1468.31 seconds.
 Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 4.1, estimated_value u(z,t) = 0.0181842 + 0 * i, Execution time: 1697.87 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 4.2, estimated_value u(z,t) = 0.0185317 + 0 * i, Execution time: 1979.08 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 4.3, estimated_value u(z,t) = 0.0175476 + 0 * i, Execution time: 2298.2 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 4.4, estimated_value u(z,t) = 0.0177139 + 0 * i, Execution time: 2673.54 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 4.5, estimated_value u(z,t) = 0.0166284 + 0 * i, Execution time: 3099.16 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 4.6, estimated_value u(z,t) = 0.0197767 + 0 * i, Execution time: 3605.22 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 4.7, estimated_value u(z,t) = 0.0157202 + 0 * i, Execution time: 4186.71 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 4.8, estimated_value u(z,t) = 0.0185863 + 0 * i, Execution time: 4857.92 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 4.9, estimated_value u(z,t) = 0.017461 + 0 * i, Execution time: 5644.85 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
+z = 9 + 0 * i, t = 5, estimated_value u(z,t) = 0.0174337 + 0 * i, Execution time: 6557 seconds.
+Updated CSV file name: '../Simulation_03/results/monte_carlo.csv'.
