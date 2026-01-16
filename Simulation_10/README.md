@@ -2,7 +2,7 @@
 
 For Simulation 10, the wave equation is:
 
-$\frac{\partial^2 u}{\partial t^2}(z_1,z_2,t)-\Biggl[\frac{\partial^2 u}{\partial z_1^2}(z_1,z_2,t)+\frac{\partial^2 u}{\partial z_2^2}(z_1,z_2,t)\Biggl] = -u(z_1,z_2,t) - (u(z_1,z_2,t))^3$
+$\frac{\partial^2 u}{\partial t^2}(z_1,z_2,t)-\Biggl[\frac{\partial^2 u}{\partial z_1^2}(z_1,z_2,t)+\frac{\partial^2 u}{\partial z_2^2}(z_1,z_2,t)\Biggl] = -u(z_1,z_2,t) + (u(z_1,z_2,t))^3$
 
 $u(z_1,z_2,0) = \phi(z_1,z_2) = \sin(\pi z_1)\sin(\pi z_2)$
 
