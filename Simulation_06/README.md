@@ -6,7 +6,7 @@ $\frac{\partial^2 u}{\partial t^2}(z_1,z_2,t)-(i)^2\Biggl[\frac{\partial^2 u}{\p
 
 $u(z_1,z_2,0) = \phi(z_1,z_2) = \tanh\Big(\frac{i}{2\sqrt{3}}(z_1+z_2)\Big)$
 
-$\frac{\partial u}{\partial t}(z_1,z_2,0) = \psi(z) = -\sqrt{\frac{2}{3}}sech^2\Big(\frac{i}{2\sqrt{3}}(z_1+z_2)\Big)$
+$\frac{\partial u}{\partial t}(z_1,z_2,0) = \psi(z_1,z_2) = -\sqrt{\frac{2}{3}}sech^2\Big(\frac{i}{2\sqrt{3}}(z_1+z_2)\Big)$
 
 The analytical solution is:
 
