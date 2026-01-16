@@ -12,4 +12,4 @@ The analytical solution is:
 
 $u(z,t) = \frac{4}{(z+\sqrt{2}t)^2-4}$
 
-We set $c=1$, $z=9+0i$, $\lambda = 1.0$, and sample $t \in [0,5.0]$.
+We set $c=1$, $z=9+0i$, $\lambda = 1.0$, and sample $t \in [0,5.0]$ in steps of $0.1$ (51 time points).

@@ -12,4 +12,4 @@ The analytical solution is:
 
 $u(z_1,z_2,t) = \tanh\Big(\frac{1}{\sqrt{6}}\big(\frac{i}{\sqrt{2}}(z_1+z_2)-2t\big)\Big)$
 
-We set $c=i$, $z_1=-1+0i$, $z_2=-1+0i$, $\lambda = 0.3495487$, and sample $t \in [0,3.0]$.
+We set $c=i$, $z_1=-1+0i$, $z_2=-1+0i$, $\lambda = 0.3495487$, and sample $t \in [0,3.0]$ in steps of $0.1$ (31 time points).
