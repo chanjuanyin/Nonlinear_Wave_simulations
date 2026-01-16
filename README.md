@@ -13,9 +13,9 @@ Wave equation: $\partial_{tt}u + \Delta u = -u + u^3$
 
 | $d$ | $\phi(z)$                                         | $\psi(z)$                                                              | analytical solution                                                                 |
 |-----|---------------------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| 1   | $\tanh\!\big(\frac{i}{\sqrt{6}}z\big)$            | $-\sqrt{\frac{2}{3}}\operatorname{sech}^2\!\big(\frac{i}{\sqrt{6}}z\big)$            | $\tanh\!\big(\frac{1}{\sqrt{6}}(iz-2t)\big)$                                         |
-| 2   | $\tanh\!\big(\frac{i}{2\sqrt{3}}(z_1+z_2)\big)$   | $-\sqrt{\frac{2}{3}}\operatorname{sech}^2\!\big(\frac{i}{2\sqrt{3}}(z_1+z_2)\big)$   | $\tanh\!\big(\frac{1}{\sqrt{6}}(\frac{i}{\sqrt{2}}(z_1+z_2)-2t)\big)$                |
-| 3   | $\tanh\!\big(\frac{i}{3\sqrt{2}}(z_1+z_2+z_3)\big)$ | $-\sqrt{\frac{2}{3}}\operatorname{sech}^2\!\big(\frac{i}{3\sqrt{2}}(z_1+z_2+z_3)\big)$ | $\tanh\!\big(\frac{1}{\sqrt{6}}(\frac{i}{\sqrt{3}}(z_1+z_2+z_3)-2t)\big)$            |
+| 1   | $\tanh\Big(\frac{i}{\sqrt{6}}z\Big)$            | $-\sqrt{\frac{2}{3}}sech^2\Big(\frac{i}{\sqrt{6}}z\Big)$            | $\tanh\Big(\frac{1}{\sqrt{6}}(iz-2t)\Big)$                                         |
+| 2   | $\tanh\Big(\frac{i}{2\sqrt{3}}(z_1+z_2)\Big)$   | $-\sqrt{\frac{2}{3}}sech^2\Big(\frac{i}{2\sqrt{3}}(z_1+z_2)\Big)$   | $\tanh\Big(\frac{1}{\sqrt{6}}\big(\frac{i}{\sqrt{2}}(z_1+z_2)-2t\big)\Big)$                |
+| 3   | $\tanh\Big(\frac{i}{3\sqrt{2}}(z_1+z_2+z_3)\Big)$ | $-\sqrt{\frac{2}{3}}sech^2\Big(\frac{i}{3\sqrt{2}}(z_1+z_2+z_3)\Big)$ | $\tanh\Big(\frac{1}{\sqrt{6}}\big(\frac{i}{\sqrt{3}}(z_1+z_2+z_3)-2t\big)\Big)$            |
 
 Evaluation points:
 
