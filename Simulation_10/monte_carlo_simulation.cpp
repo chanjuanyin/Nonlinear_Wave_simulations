@@ -76,7 +76,7 @@ complex<double> simulate_recursion(complex<double> z_1, complex<double> z_2, dou
             aJ = complex<double>(-1., 0.);
         } else {
             J = 3;
-            aJ = complex<double>(1., 0.);
+            aJ = complex<double>(-1., 0.);
         }
         complex<double> H = complex<double>(1., 0.);
         for (int l = 0; l < J; l++) {
