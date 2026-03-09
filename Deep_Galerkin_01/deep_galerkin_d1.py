@@ -5,7 +5,7 @@ import torch
 import torch.nn.functional as F
 import logging
 import numpy as np
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
 torch.manual_seed(0)  # set seed for reproducibility
 
@@ -27,12 +27,14 @@ class DGMNet(torch.nn.Module):
         phi_fun=(lambda x: x),
         psi_fun=(lambda x: x),
         dt_order=2,
-        tx_to_tx_init_ratio = 5,
-        x_lo=-10.0,
-        x_hi=10.0,
-        overtrain_rate=0.1,
+        x_lo_original=0.0,
+        x_hi_original=1.0,
+        overtrain_rate=1.0,
+        x_low_original_boundary_fun=None,
+        x_high_original_boundary_fun=None,
         t_lo=0.0,
         t_hi=1.0,
+        tx_to_tx_init_ratio = 5,
         neurons=20,
         layers=5,
         dgm_lr=1e-3,
@@ -52,6 +54,7 @@ class DGMNet(torch.nn.Module):
         self.f_fun = dgm_f_fun
         self.boundary_fun = boundary_fun
         self.n, self.dim_in = dgm_deriv_map.shape # self.n = 3, self.dim_in = 1
+        # print(f"deriv_map has shape {dgm_deriv_map.shape} with n={self.n} and dim_in={self.dim_in}")
         
         """Working on the derivative map, we need to add time derivative at the beginning."""
         # add one more dimension of time to the left of deriv_map
@@ -142,14 +145,19 @@ class DGMNet(torch.nn.Module):
         self.batch_normalization = batch_normalization
         self.nb_states = dgm_nb_states
         self.tx_to_tx_init_ratio = tx_to_tx_init_ratio
-        self.ori_x_lo = x_lo
-        self.ori_x_hi = x_hi
+        
+        
+        self.ori_x_lo = x_lo_original
+        self.ori_x_hi = x_hi_original
         x_lo, x_hi = (
-            x_lo - overtrain_rate * (x_hi - x_lo),
-            x_hi + overtrain_rate * (x_hi - x_lo),
+            x_lo_original - overtrain_rate * (x_hi_original - x_lo_original),
+            x_hi_original + overtrain_rate * (x_hi_original - x_lo_original),
         )
         self.x_lo = x_lo
         self.x_hi = x_hi
+        self.x_low_original_boundary_fun = x_low_original_boundary_fun
+        self.x_high_original_boundary_fun = x_high_original_boundary_fun
+
         self.t_lo = t_lo
         self.t_hi = t_hi
         self.epochs = epochs
@@ -158,15 +166,17 @@ class DGMNet(torch.nn.Module):
         self.fix_all_dim_except_first = fix_all_dim_except_first
 
         timestr = time.strftime("%Y%m%d-%H%M%S")  # current time stamp
-        self.directory = directory
+        self.directory = directory if directory is not None else ""
         self.working_dir = (
-            self.directory + "logs/tmp" if save_as_tmp
-            else self.directory + f"logs/{timestr}-{problem_name}"
+            os.path.join(self.directory, "logs", "tmp")
+            if save_as_tmp
+            else os.path.join(self.directory, "logs", f"{timestr}-{problem_name}")
         )
         self.working_dir_full_path = os.path.join(
             os.getcwd(),
             self.working_dir,
         )
+        
         self.log_config()
         self.eval()
 
@@ -198,8 +208,34 @@ class DGMNet(torch.nn.Module):
 
         # Stack into tx_init with shape (dim_in + 1, nb_states).
         tx_init = torch.cat((t_init.unsqueeze(0), x_init), dim=0)
+        
+        if self.x_low_original_boundary_fun:
+            # Build boundary samples at x_lo: x fixed at ori_x_lo, t sampled uniformly in [t_lo, t_hi].
+            t_boundary = self.t_lo + (self.t_hi - self.t_lo) * torch.rand(
+                self.nb_states, device=self.device
+            )
+            x_boundary = self.ori_x_lo * torch.ones(
+                (self.dim_in, self.nb_states), device=self.device
+            )
+            # Stack into tx_boundary_at_x_lo with shape (dim_in + 1, nb_states).
+            tx_boundary_at_x_lo = torch.cat((t_boundary.unsqueeze(0), x_boundary), dim=0)
+        else:
+            tx_boundary_at_x_lo = None
+            
+        if self.x_high_original_boundary_fun:
+            # Build boundary samples at x_hi: x fixed at ori_x_hi, t sampled uniformly in [t_lo, t_hi].
+            t_boundary = self.t_lo + (self.t_hi - self.t_lo) * torch.rand(
+                self.nb_states, device=self.device
+            )
+            x_boundary = self.ori_x_hi * torch.ones(
+                (self.dim_in, self.nb_states), device=self.device
+            )
+            # Stack into tx_boundary_at_x_hi with shape (dim_in + 1, nb_states).
+            tx_boundary_at_x_hi = torch.cat((t_boundary.unsqueeze(0), x_boundary), dim=0)
+        else:
+            tx_boundary_at_x_hi = None
 
-        return tx, tx_init
+        return tx, tx_init, tx_boundary_at_x_lo, tx_boundary_at_x_hi
 
     def train_and_eval(self, debug_mode=False):
         """
@@ -215,7 +251,7 @@ class DGMNet(torch.nn.Module):
 
         # loop through epochs
         for epoch in range(self.epochs):
-            tx, tx_init = self.gen_sample()
+            tx, tx_init, tx_boundary_at_x_lo, tx_boundary_at_x_hi = self.gen_sample()
 
             # clear gradients and evaluate training loss
             optimizer.zero_grad()
@@ -226,7 +262,7 @@ class DGMNet(torch.nn.Module):
                 # initial-condition loss + pde loss
                 # Initial-condition loss at t=t_lo using tx_init samples.
                 pred_init = self.forward(tx_init.T, coordinate=idx)
-                target_init = self.phi_fun(tx_init[1:, :], dim=self.dim_in, coordinate=idx)
+                target_init = self.phi_fun(tx_init[1:, :], total_dim=self.dim_in, coordinate=idx)
                 loss = self.loss(pred_init, target_init) # torch.nn.MSELoss()
                 
                 tx_init_2 = tx_init.detach().clone().requires_grad_(True)
@@ -235,9 +271,23 @@ class DGMNet(torch.nn.Module):
                     self.forward(tx_init_2.T, coordinate=idx),
                     tx_init_2,
                 )
-                target_init_psi = self.psi_fun(tx_init[1:, :], dim=self.dim_in, coordinate=idx)
+                target_init_psi = self.psi_fun(tx_init[1:, :], total_dim=self.dim_in, coordinate=idx)
                 loss = loss + self.loss(pred_init_psi, target_init_psi)
                 
+                if tx_boundary_at_x_lo is not None:
+                    pred_boundary_at_x_lo = self.forward(tx_boundary_at_x_lo.T, coordinate=idx)
+                    target_boundary_at_x_lo = self.x_low_original_boundary_fun(
+                        tx_boundary_at_x_lo, total_dim=self.dim_in, coordinate=idx
+                    )
+                    loss = loss + self.loss(pred_boundary_at_x_lo, target_boundary_at_x_lo)
+                
+                if tx_boundary_at_x_hi is not None:
+                    pred_boundary_at_x_hi = self.forward(tx_boundary_at_x_hi.T, coordinate=idx)
+                    target_boundary_at_x_hi = self.x_high_original_boundary_fun(
+                        tx_boundary_at_x_hi, total_dim=self.dim_in, coordinate=idx
+                    )
+                    loss = loss + self.loss(pred_boundary_at_x_hi, target_boundary_at_x_hi)
+
                 pde_loss_term = self.pde_loss(tx, coordinate=idx)
                 loss = loss + pde_loss_term
                     
@@ -637,33 +687,42 @@ if __name__ == "__main__":
     # deriv_map is n x d array defining lambda_1, ..., lambda_n
     deriv_map = np.array(
         [
-            [0, 0],  # u
-            [2, 0],  # \partial_{xx} u
-            [0, 2],  # \partial_{yy} u
+            [0],  # u
+            [2],  # \partial_{xx} u
         ]
     )
     _, dim = deriv_map.shape # dim = 2
 
     def f_example(y):
         """
-        y has shape (3, N), with rows:
-        y[0]=u, y[1]=∂xx u, y[2]=∂yy u
+        y has shape (2, N), with rows:
+        y[0]=u, y[1]=∂xx u
         dim=1. 
         """
-        f = +(y[1]+y[2]) + y[0] - y[0]**3 # f(u) = +(∂xx u + ∂yy u) + u - u^3
+        f = y[1] + y[0] - y[0]**3 # f(u) = ∂xx u + u - u^3
         return f
 
-    def phi_example(x, dim, coordinate):
+    def phi_example(x, total_dim, coordinate):
         output = 1
-        for d in range(dim):
+        for d in range(total_dim):
             output *= torch.sin(math.pi * x[d])
         return output
         
-    def psi_example(x, dim, coordinate):
+    def psi_example(x, total_dim, coordinate):
         output = -1
-        for d in range(dim):
+        for d in range(total_dim):
             output *= torch.sin(math.pi * x[d])
         return output
+    
+    def x_low_original_boundary_function_example(tx, total_dim, coordinate):
+        t = tx[0]
+        x = tx[1]
+        return torch.zeros_like(t)
+
+    def x_high_original_boundary_function_example(tx, total_dim, coordinate):
+        t = tx[0]
+        x = tx[1]
+        return torch.zeros_like(t)
 
 
     # boundary_fun=None & overtrain_rate=.1
@@ -677,19 +736,21 @@ if __name__ == "__main__":
         dgm_zeta_map=zeta_map,
         dt_order=2,
         t_lo=0.0,
-        t_hi=1.0,
-        x_lo=-1.0,
-        x_hi=2.0,
+        t_hi=2.0,
+        tx_to_tx_init_ratio=5,
+        x_lo_original=0.0,
+        x_hi_original=1.0,
+        overtrain_rate=2.0,
+        x_low_original_boundary_fun=x_low_original_boundary_function_example,
+        x_high_original_boundary_fun=x_high_original_boundary_function_example,
         device=device,
         verbose=True,
         save_as_tmp=True,
-        dgm_nb_states=1000,
-        tx_to_tx_init_ratio = 5,
+        dgm_nb_states=2000,
         epochs=5000,
         dgm_lr=1e-3,
         weight_decay=1e-6,
-        overtrain_rate=.0,
-        directory = "../Deep_Galerkin_01/"
+        directory=None
     )
     model.train_and_eval(debug_mode=False)
 
@@ -701,22 +762,18 @@ if __name__ == "__main__":
     # Each row corresponds to one t in t_values, each column corresponds to one x in x_values.
     predictions = np.zeros((len(t_values), len(x_values)), dtype=np.float32)
 
-    # For dim_in > 1, keep extra spatial dimensions fixed at 0.5 while sweeping x1.
-    x_fixed = 0.5
     model.eval()
     with torch.no_grad():
         x_tensor = torch.tensor(x_values, device=device)
         for row_idx, t_val in enumerate(t_values):
-            nn_input = torch.full(
-                (len(x_values), model.dim_in + 1), x_fixed, device=device
-            )
-            nn_input[:, 0] = float(t_val)
-            nn_input[:, 1] = x_tensor
+            t_tensor = torch.full((len(x_values),), float(t_val), device=device)
+            # Model input is (t, x) for dim_in=1.
+            nn_input = torch.stack((t_tensor, x_tensor), dim=1)
             predictions[row_idx, :] = model(nn_input, coordinate=0).detach().cpu().numpy()
 
     # Save CSV under results/.
-    os.makedirs("../Deep_Galerkin_01/results", exist_ok=True)
-    results_path = os.path.join("../Deep_Galerkin_01/results", "predictions_d1.csv")
+    os.makedirs("results", exist_ok=True)
+    results_path = os.path.join("results", "predictions_d1.csv")
     header = ",".join([f"{x:.2f}" for x in x_values])
     np.savetxt(results_path, predictions, delimiter=",", header=header, comments="")
     print(f"Saved prediction grid to {results_path}")
