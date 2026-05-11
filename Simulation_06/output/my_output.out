@@ -1,62 +1,155 @@
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0, estimated_value u(z,t) = 0 + -0.651388 * i, Execution time: 2.58948 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.1, estimated_value u(z,t) = -0.115717 + -0.645256 * i, Execution time: 2.88569 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.2, estimated_value u(z,t) = -0.227963 + -0.62729 * i, Execution time: 3.06029 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.3, estimated_value u(z,t) = -0.333798 + -0.599089 * i, Execution time: 3.31891 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.4, estimated_value u(z,t) = -0.43114 + -0.562928 * i, Execution time: 3.53742 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.5, estimated_value u(z,t) = -0.518214 + -0.520529 * i, Execution time: 3.95457 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.6, estimated_value u(z,t) = -0.594939 + -0.476093 * i, Execution time: 4.22381 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.7, estimated_value u(z,t) = -0.660499 + -0.428542 * i, Execution time: 4.12002 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.8, estimated_value u(z,t) = -0.717102 + -0.38344 * i, Execution time: 4.46951 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.9, estimated_value u(z,t) = -0.764947 + -0.339916 * i, Execution time: 4.71089 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1, estimated_value u(z,t) = -0.804314 + -0.298933 * i, Execution time: 4.95631 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.1, estimated_value u(z,t) = -0.837479 + -0.260515 * i, Execution time: 5.06116 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.2, estimated_value u(z,t) = -0.864202 + -0.227366 * i, Execution time: 5.33014 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.3, estimated_value u(z,t) = -0.886955 + -0.195429 * i, Execution time: 5.84262 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.4, estimated_value u(z,t) = -0.937296 + -0.190472 * i, Execution time: 6.10645 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.5, estimated_value u(z,t) = 0.0559884 + -0.205756 * i, Execution time: 6.29704 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.6, estimated_value u(z,t) = 7.17395 + 3.77749 * i, Execution time: 6.63553 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.7, estimated_value u(z,t) = -22.2786 + -4.12319 * i, Execution time: 6.94601 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.8, estimated_value u(z,t) = -3066.12 + 5319.1 * i, Execution time: 7.34755 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.9, estimated_value u(z,t) = 122791 + -165442 * i, Execution time: 7.67955 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2, estimated_value u(z,t) = -36792.8 + 2.11125e+06 * i, Execution time: 7.97926 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.1, estimated_value u(z,t) = -4.68929e+09 + -1.45416e+10 * i, Execution time: 8.37341 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.2, estimated_value u(z,t) = -1.95552e+10 + -4.45453e+09 * i, Execution time: 8.86336 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.3, estimated_value u(z,t) = 2.33473e+13 + -7.02389e+13 * i, Execution time: 9.52868 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.4, estimated_value u(z,t) = -5.45419e+13 + 1.92754e+14 * i, Execution time: 9.85326 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.5, estimated_value u(z,t) = -1.31862e+16 + 8.1862e+15 * i, Execution time: 10.1833 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.6, estimated_value u(z,t) = -4.72503e+17 + -2.54039e+17 * i, Execution time: 10.6957 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.7, estimated_value u(z,t) = -6.08943e+22 + -1.21951e+21 * i, Execution time: 11.1166 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.8, estimated_value u(z,t) = -1.82305e+22 + 3.80426e+22 * i, Execution time: 11.6973 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.9, estimated_value u(z,t) = -5.6835e+26 + -8.74135e+27 * i, Execution time: 12.2207 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
-z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 3, estimated_value u(z,t) = -1.4731e+28 + -1.60093e+28 * i, Execution time: 12.7281 seconds.
-Updated CSV file name: '../Simulation_06/results/monte_carlo.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0, estimated_value u(z,t) = 0 + -0.651388 * i, Execution time: 4.38606 seconds.
+Sample variance (real, imag) = 0, 1.05185e-20.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.1, estimated_value u(z,t) = -0.115682 + -0.645193 * i, Execution time: 4.63043 seconds.
+Sample variance (real, imag) = 0.00524743, 0.0220295.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.2, estimated_value u(z,t) = -0.227999 + -0.627165 * i, Execution time: 5.08185 seconds.
+Sample variance (real, imag) = 0.0249586, 0.0614035.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.3, estimated_value u(z,t) = -0.333924 + -0.599113 * i, Execution time: 4.98203 seconds.
+Sample variance (real, imag) = 0.0675827, 0.121524.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.4, estimated_value u(z,t) = -0.431124 + -0.562803 * i, Execution time: 5.42471 seconds.
+Sample variance (real, imag) = 0.145141, 0.206385.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.5, estimated_value u(z,t) = -0.518277 + -0.520778 * i, Execution time: 5.52294 seconds.
+Sample variance (real, imag) = 0.273442, 0.321868.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.6, estimated_value u(z,t) = -0.594405 + -0.475303 * i, Execution time: 6.55624 seconds.
+Sample variance (real, imag) = 0.473075, 0.481106.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.7, estimated_value u(z,t) = -0.660883 + -0.429052 * i, Execution time: 6.2615 seconds.
+Sample variance (real, imag) = 0.772351, 0.712467.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.8, estimated_value u(z,t) = -0.71684 + -0.383293 * i, Execution time: 6.10777 seconds.
+Sample variance (real, imag) = 1.22669, 1.08176.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 0.9, estimated_value u(z,t) = -0.763422 + -0.339467 * i, Execution time: 7.41168 seconds.
+Sample variance (real, imag) = 1.96178, 1.739.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1, estimated_value u(z,t) = -0.802083 + -0.2982 * i, Execution time: 7.32663 seconds.
+Sample variance (real, imag) = 3.33812, 3.08009.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.1, estimated_value u(z,t) = -0.837747 + -0.260738 * i, Execution time: 7.12681 seconds.
+Sample variance (real, imag) = 6.8323, 6.89946.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.2, estimated_value u(z,t) = -0.867319 + -0.228017 * i, Execution time: 8.08292 seconds.
+Sample variance (real, imag) = 33.2584, 23.397.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.3, estimated_value u(z,t) = -0.883113 + -0.198346 * i, Execution time: 7.4808 seconds.
+Sample variance (real, imag) = 167.291, 162.794.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.4, estimated_value u(z,t) = -0.872911 + -0.203752 * i, Execution time: 8.52517 seconds.
+Sample variance (real, imag) = 4567.42, 11783.1.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.5, estimated_value u(z,t) = -0.939655 + -0.258084 * i, Execution time: 8.70103 seconds.
+Sample variance (real, imag) = 169970, 336835.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.6, estimated_value u(z,t) = -4.49169 + -2.21309 * i, Execution time: 8.96528 seconds.
+Sample variance (real, imag) = 1.62778e+08, 6.4422e+07.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.7, estimated_value u(z,t) = 76.8438 + -286.783 * i, Execution time: 9.47264 seconds.
+Sample variance (real, imag) = 2.68661e+11, 6.83422e+11.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.8, estimated_value u(z,t) = -2513.17 + 3310.65 * i, Execution time: 9.05941 seconds.
+Sample variance (real, imag) = 6.52654e+13, 1.75843e+14.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 1.9, estimated_value u(z,t) = -55825.2 + -229256 * i, Execution time: 9.50468 seconds.
+Sample variance (real, imag) = 2.05011e+17, 5.70093e+17.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2, estimated_value u(z,t) = 5.21331e+06 + 1.27639e+06 * i, Execution time: 10.1436 seconds.
+Sample variance (real, imag) = 1.65234e+20, 1.45438e+19.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.1, estimated_value u(z,t) = 3.80704e+07 + 1.33865e+07 * i, Execution time: 10.8582 seconds.
+Sample variance (real, imag) = 1.03634e+22, 4.89391e+21.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.2, estimated_value u(z,t) = 2.87774e+07 + 549134 * i, Execution time: 10.9176 seconds.
+Sample variance (real, imag) = 9.01656e+22, 1.21686e+22.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.3, estimated_value u(z,t) = 1.00847e+10 + 1.47129e+10 * i, Execution time: 11.5957 seconds.
+Sample variance (real, imag) = 9.83009e+26, 2.41148e+27.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.4, estimated_value u(z,t) = 6.93492e+13 + 1.78693e+13 * i, Execution time: 11.8841 seconds.
+Sample variance (real, imag) = 4.81253e+34, 2.62683e+33.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.5, estimated_value u(z,t) = -1.4732e+15 + -1.46866e+14 * i, Execution time: 12.2464 seconds.
+Sample variance (real, imag) = 2.12418e+37, 2.55161e+35.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.6, estimated_value u(z,t) = -1.21037e+15 + 5.70901e+15 * i, Execution time: 12.7956 seconds.
+Sample variance (real, imag) = 2.53013e+38, 2.17365e+38.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.7, estimated_value u(z,t) = 6.3813e+17 + 1.0813e+18 * i, Execution time: 13.1027 seconds.
+Sample variance (real, imag) = 4.61397e+42, 2.50729e+43.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.8, estimated_value u(z,t) = 1.44586e+19 + -1.27382e+18 * i, Execution time: 13.5127 seconds.
+Sample variance (real, imag) = 1.30807e+45, 2.19401e+45.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 2.9, estimated_value u(z,t) = -4.06313e+25 + -2.59079e+26 * i, Execution time: 14.3703 seconds.
+Sample variance (real, imag) = 1.65024e+58, 6.71233e+59.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.
+z_1 = -1 + 0 * i, z_2 = -1 + 0 * i, t = 3, estimated_value u(z,t) = 5.12071e+29 + 9.91924e+29 * i, Execution time: 14.2003 seconds.
+Sample variance (real, imag) = 2.62217e+66, 9.83914e+66.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_mean.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_variance.csv'.
+Updated CSV file name: '../Simulation_06/results/monte_carlo_runtime.csv'.

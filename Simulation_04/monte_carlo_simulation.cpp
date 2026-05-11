@@ -26,7 +26,7 @@ const double eps=1e-6;
 // Number of simulations
 const int NUM_SIMULATIONS = 10000000;
 // Number of threads
-const int NUM_THREADS = 102;
+const int NUM_THREADS = 96;
 
 complex<double> sech(complex<double> x) {
     return 2.0 / (exp(x) + exp(-x));
@@ -79,7 +79,14 @@ void run_simulation(int start, int end, complex<double> z, double t, complex<dou
     }
 }
 
-std::pair<double, double> simulate(complex<double> z, double t, complex<double> c, double lambda, int total_sims) {
+struct SimulationStats {
+    double mean_real;
+    double mean_imag;
+    double var_real;
+    double var_imag;
+};
+
+SimulationStats simulate(complex<double> z, double t, complex<double> c, double lambda, int total_sims) {
     xt::xarray<double> results_real = xt::zeros<double>({total_sims});
     xt::xarray<double> results_imaginary = xt::zeros<double>({total_sims});
 
@@ -105,8 +112,16 @@ std::pair<double, double> simulate(complex<double> z, double t, complex<double> 
     double avg_real = xt::mean(results_real)[0];
     double avg_imaginary = xt::mean(results_imaginary)[0];
 
-    // Return both averages as a pair
-    return std::make_pair(avg_real, avg_imaginary);
+    // Calculate the sample variance (unbiased, ddof=1)
+    double var_real = xt::mean(xt::square(results_real - avg_real))[0];
+    double var_imaginary = xt::mean(xt::square(results_imaginary - avg_imaginary))[0];
+    if (total_sims > 1) {
+        double factor = static_cast<double>(total_sims) / static_cast<double>(total_sims - 1);
+        var_real *= factor;
+        var_imaginary *= factor;
+    }
+
+    return {avg_real, avg_imaginary, var_real, var_imaginary};
 }
 
 int main()
@@ -122,26 +137,43 @@ int main()
     complex<double> c = complex<double>(0., 1.); // c = i
     double lambda = 0.4185722; // Choose lambda = t_0, please refer to the Plot_history.ipynb Jupyter Notebook for details of how to calculate maximum t_0 (existence time of classical solution)
     int num_estimations = 31;
-    xt::xarray<double> arr = xt::zeros<double>({2, num_estimations});
-    string file_name = "../Simulation_04/results/monte_carlo.csv";
+    xt::xarray<double> arr_mean = xt::zeros<double>({2, num_estimations});
+    xt::xarray<double> arr_var = xt::zeros<double>({2, num_estimations});
+    xt::xarray<double> arr_runtime = xt::zeros<double>({1, num_estimations});
+    string mean_file_name = "../Simulation_04/results/monte_carlo_mean.csv";
+    string var_file_name = "../Simulation_04/results/monte_carlo_variance.csv";
+    string runtime_file_name = "../Simulation_04/results/monte_carlo_runtime.csv";
 
     for (int k = 0; k < num_estimations; k++) {
         double t = static_cast<double>(k);
         t /= 10.;
         auto start_time = std::chrono::high_resolution_clock::now();
-        std::pair<double, double> estimated_value = simulate(z, t, c, lambda, NUM_SIMULATIONS);
+        SimulationStats estimated_value = simulate(z, t, c, lambda, NUM_SIMULATIONS);
         auto end_time = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed_time = end_time - start_time;
         cout << "z = " << z.real() << " + " << z.imag() << " * i, t = " << t << ", estimated_value u(z,t) = " 
-            << estimated_value.first << " + " << estimated_value.second << " * i, Execution time: " 
+            << estimated_value.mean_real << " + " << estimated_value.mean_imag << " * i, Execution time: " 
             << elapsed_time.count() << " seconds."<< endl;
+        cout << "Sample variance (real, imag) = " << estimated_value.var_real << ", " << estimated_value.var_imag << "." << endl;
 
         // Update the value in the array and write to CSV
-        xt::view(arr, 0, k) = estimated_value.first;
-        xt::view(arr, 1, k) = estimated_value.second;
-        std::ofstream out_file(file_name);
-        xt::dump_csv(out_file, arr);
-        cout << "Updated CSV file name: '" << file_name << "'." << endl;
+        xt::view(arr_mean, 0, k) = estimated_value.mean_real;
+        xt::view(arr_mean, 1, k) = estimated_value.mean_imag;
+        xt::view(arr_var, 0, k) = estimated_value.var_real;
+        xt::view(arr_var, 1, k) = estimated_value.var_imag;
+        xt::view(arr_runtime, 0, k) = elapsed_time.count();
+
+        std::ofstream mean_out(mean_file_name);
+        xt::dump_csv(mean_out, arr_mean);
+        cout << "Updated CSV file name: '" << mean_file_name << "'." << endl;
+
+        std::ofstream var_out(var_file_name);
+        xt::dump_csv(var_out, arr_var);
+        cout << "Updated CSV file name: '" << var_file_name << "'." << endl;
+
+        std::ofstream runtime_out(runtime_file_name);
+        xt::dump_csv(runtime_out, arr_runtime);
+        cout << "Updated CSV file name: '" << runtime_file_name << "'." << endl;
     }
 
     return 0;
